@@ -13,23 +13,23 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="typeof 不能识别引用类型，instanceof 可以，但我想用自己的 typeof 实现">
+  <meta name="description" content="事件流是什么，事件流的顺序，取消事件委托">
   <meta name="author" content="Dlyan">
   <meta name="keywords" content="blog">
-  <meta name="description" content="typeof 不能识别引用类型，instanceof 可以，但我想用自己的 typeof 实现">
+  <meta name="description" content="事件流是什么，事件流的顺序，取消事件委托">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Object.prototype.toString实现myTypeof">
-<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/11/26/typeof/index.html">
+<meta property="og:title" content="事件流、事件捕获、事件冒泡、事件委托或事件代理">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/03/event/index.html">
 <meta property="og:site_name" content="Dylan&#39;s blog">
-<meta property="og:description" content="typeof 不能识别引用类型，instanceof 可以，但我想用自己的 typeof 实现">
+<meta property="og:description" content="事件流是什么，事件流的顺序，取消事件委托">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-26T14:24:14.000Z">
-<meta property="article:modified_time" content="2021-12-01T14:29:35.883Z">
+<meta property="article:published_time" content="2021-12-03T12:24:14.000Z">
+<meta property="article:modified_time" content="2021-12-08T13:32:04.033Z">
 <meta property="article:author" content="Dlyan">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>使用Object.prototype.toString实现myTypeof - Dylan&#39;s blog</title>
+  <title>事件流、事件捕获、事件冒泡、事件委托或事件代理 - Dylan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,12 +182,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/dylan/imgs/typeof/big.png') no-repeat center center;
+         style="background: url('/dylan/imgs/event/big.png#') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="使用Object.prototype.toString实现myTypeof">
+            <span class="h2" id="subtitle" title="事件流、事件捕获、事件冒泡、事件委托或事件代理">
               
             </span>
 
@@ -202,8 +202,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-26 22:24" pubdate>
-        2021年11月26日 晚上
+      <time datetime="2021-12-03 20:24" pubdate>
+        2021年12月3日 晚上
       </time>
     </span>
   
@@ -213,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.9k 字
+      1.8k 字
     </span>
   
 
@@ -259,19 +259,40 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">使用Object.prototype.toString实现myTypeof</h1>
+            <h1 style="display: none">事件流、事件捕获、事件冒泡、事件委托或事件代理</h1>
             
             <div class="markdown-body">
-              <h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h2><p>除了 null、undefined 不能使用 toString 方法外，其他数据类型都可以使用 toString 方法，实际上，这个 toString 方法是当前引用对象的方法，将传入 toString 的参数转为 string 类型并返回</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;123&#x27;</span>.toString())   <span class="hljs-comment">//123</span><br><span class="hljs-built_in">console</span>.log((<span class="hljs-number">123</span>).toString())   <span class="hljs-comment">//123 不加括号报错，加括号是为了求值？</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toString())  <span class="hljs-comment">//当前时间</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>().toString())    <span class="hljs-comment">///(?:)/</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;&#125;.toString())    <span class="hljs-comment">//function()&#123;&#125;</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-literal">false</span>.toString())   <span class="hljs-comment">//false</span><br><span class="hljs-built_in">console</span>.log(&#123;<span class="hljs-number">1</span>:<span class="hljs-number">1</span>&#125;.toString())   <span class="hljs-comment">//[object Object]</span><br></code></pre></td></tr></table></figure>
+              <h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>事件流分为三个阶段：捕获阶段、目标阶段、冒泡阶段</p>
+<p>捕获阶段：从最外层一层一层到目标</p>
+<p>目标阶段：执行目标的事件</p>
+<p>冒泡阶段：从目标一层一层到最外层</p>
+<p>事件函数的执行默认都是在冒泡阶段执行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;style&gt;<br>    #a &#123;<br>        <span class="hljs-attr">width</span>: 300px;<br>        height: 300px;<br>        background-color: black;<br>    &#125;<br><br>    #b &#123;<br>        <span class="hljs-attr">width</span>: 200px;<br>        height: 200px;<br>        background-color: blue;<br>    &#125;<br><br>    #c &#123;<br>        <span class="hljs-attr">width</span>: 100px;<br>        height: 100px;<br>        background-color: red;<br>    &#125;<br>&lt;/style&gt;<br><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;b&quot;</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;c&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="javascript"><span class="xml">a.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="javascript"><span class="xml">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;a&#x27;</span>)</span></span><br><span class="javascript"><span class="xml">&#125;)</span></span><br><span class="javascript"><span class="xml">b.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="javascript"><span class="xml">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;b&#x27;</span>)</span></span><br><span class="javascript"><span class="xml">&#125;)</span></span><br><span class="javascript"><span class="xml">c.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="javascript"><span class="xml">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;c&#x27;</span>)</span></span><br><span class="javascript"><span class="xml">&#125;)</span></span><br><span class="javascript"><span class="xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
 
-<p>我的理解：根据最后一条输出结果判定，toString 方法来自 Object 原型</p>
-<h2 id="Object-prototype-toString"><a href="#Object-prototype-toString" class="headerlink" title="Object.prototype.toString"></a>Object.prototype.toString</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.toString.call(<span class="hljs-string">&#x27;123&#x27;</span>))   <span class="hljs-comment">//[object String]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.toString.call(<span class="hljs-number">123</span>))    <span class="hljs-comment">//[object Number]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.toString.call(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;&#125;))   <span class="hljs-comment">//[object Function]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.toString.call(<span class="hljs-literal">false</span>))  <span class="hljs-comment">//[object Boolean]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.toString.call(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>())) <span class="hljs-comment">//[object Date]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.toString.call(<span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>)) <span class="hljs-comment">//[object RegExp]</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.toString.call(&#123;&#125;)) <span class="hljs-comment">//[object Object]</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>点击红色方块(c元素)，打印顺序为 cba</p>
+</blockquote>
+<p>说明事件函数的执行是在冒泡阶段执行，给 addEventListener 第三个参数设为 true 时。</p>
+<blockquote>
+<p>点击红色方块(c元素)，打印顺序为abc</p>
+</blockquote>
+<p>说明事件函数的执行在捕获阶段。</p>
+<h2 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h2><p>顾名思义，将子级的事件委托给父级完成，通过 e.target 实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-keyword">let</span> e = e || event<br>    <span class="hljs-keyword">let</span> target = e.target || e.srcElement<br>    <span class="hljs-built_in">console</span>.log(target)<br>&#125;)<br></code></pre></td></tr></table></figure>
 
-<p>可以利用 Object.prototype.toString 写一个 myTypeof</p>
-<h2 id="扩展typeof"><a href="#扩展typeof" class="headerlink" title="扩展typeof"></a>扩展typeof</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myTypeof</span>(<span class="hljs-params">val</span>)</span>&#123;<br>    <span class="hljs-keyword">let</span> res = <span class="hljs-keyword">typeof</span> val<br>    <span class="hljs-keyword">let</span> temp = &#123;<br>        <span class="hljs-string">&quot;[object Function]&quot;</span>:<span class="hljs-string">&quot;Function&quot;</span>,<br>        <span class="hljs-string">&quot;[object Date]&quot;</span>:<span class="hljs-string">&quot;Date&quot;</span>,<br>        <span class="hljs-string">&quot;[object RegExp]&quot;</span>:<span class="hljs-string">&quot;RegExp&quot;</span>,<br>        <span class="hljs-string">&quot;[object Array]&quot;</span>:<span class="hljs-string">&quot;Array&quot;</span>,<br>        <span class="hljs-string">&quot;[object Object]&quot;</span>:<span class="hljs-string">&quot;Object&quot;</span><br>        <span class="hljs-comment">//...</span><br>    &#125;<br>    <span class="hljs-keyword">if</span>(val===<span class="hljs-literal">null</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;null&quot;</span><br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(val===<span class="hljs-literal">undefined</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;undefined&quot;</span><br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(res === <span class="hljs-string">&quot;object&quot;</span>)&#123;<br>        <span class="hljs-keyword">let</span> str = <span class="hljs-built_in">Object</span>.prototype.toString.call(val)<br>        <span class="hljs-keyword">return</span> (temp[str])<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">return</span> res<br>    &#125;<br>&#125;<br><span class="hljs-built_in">console</span>.log(myTypeof(<span class="hljs-literal">undefined</span>))    <span class="hljs-comment">//undefined</span><br><span class="hljs-built_in">console</span>.log(myTypeof(<span class="hljs-literal">null</span>)) <span class="hljs-comment">//null</span><br><span class="hljs-built_in">console</span>.log(myTypeof(<span class="hljs-number">123</span>))  <span class="hljs-comment">//number</span><br><span class="hljs-built_in">console</span>.log(myTypeof(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()))   <span class="hljs-comment">//Date</span><br><span class="hljs-built_in">console</span>.log(myTypeof([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]))    <span class="hljs-comment">//Array</span><br><span class="hljs-built_in">console</span>.log(myTypeof(&#123;<span class="hljs-number">1</span>:<span class="hljs-number">2</span>&#125;))    <span class="hljs-comment">//Object</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>点击红色方块(c元素)，打印结果是 c 的 dom 对象</p>
+</blockquote>
+<p>代码中并未给元素c绑定事件函数，而打印出了 c 的 dom 对象，说明 c 的事件委托给了 a </p>
+<h2 id="取消冒泡"><a href="#取消冒泡" class="headerlink" title="取消冒泡"></a>取消冒泡</h2><p>bubbles：event 的冒泡属性，默认为 true。</p>
+<p>stopPropagation：取消事件冒泡和委托函数的执行。</p>
+<p>stopImmediatePropagation：取消事件冒泡和委托函数的执行，并中断同一事件函数的执行（比如在 a 元素的第一个点击事件执行 e.stopImmediatePropagation() ，则 a 元素的第二个点击事件不会执行）</p>
+<p>cancelBubble: e.cancelBubble = true 取消事件冒泡</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;a&#x27;</span>)<br>&#125;)<br>b.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;b&#x27;</span>)<br>&#125;)<br>c.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(e.bubbles)<br>    e.stopPropagation() <span class="hljs-comment">//或者 e.cancelbubbles = true</span><br> 	e.stopImmediatePropagation()<br>&#125;)<br>c.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;c&#x27;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
 
-<p>类型没写完，思路就这样。</p>
+<blockquote>
+<p>点击红色方块(c元素)，只会输出 true</p>
+</blockquote>
 
             </div>
             <hr>
@@ -306,18 +327,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/dylan/2021/12/03/event/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">事件流、事件捕获、事件冒泡、事件委托或事件代理</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/dylan/2021/11/23/clone/">
-                        <span class="hidden-mobile">浅拷贝与深拷贝</span>
+                      <a href="/dylan/2021/11/26/typeof/">
+                        <span class="hidden-mobile">使用Object.prototype.toString实现myTypeof</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
