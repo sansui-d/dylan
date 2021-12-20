@@ -13,23 +13,23 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="事件流是什么，事件流的顺序，取消事件委托">
+  <meta name="description" content="http部分状态码含义及使用场景">
   <meta name="author" content="Dlyan">
   <meta name="keywords" content="blog">
-  <meta name="description" content="事件流是什么，事件流的顺序，取消事件委托">
+  <meta name="description" content="http部分状态码含义及使用场景">
 <meta property="og:type" content="article">
-<meta property="og:title" content="事件流、事件捕获、事件冒泡、事件委托或事件代理">
-<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/03/event/index.html">
+<meta property="og:title" content="http常用状态码">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/10/http/index.html">
 <meta property="og:site_name" content="Dylan&#39;s blog">
-<meta property="og:description" content="事件流是什么，事件流的顺序，取消事件委托">
+<meta property="og:description" content="http部分状态码含义及使用场景">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-03T12:24:14.000Z">
-<meta property="article:modified_time" content="2021-12-08T13:32:04.033Z">
+<meta property="article:published_time" content="2021-12-10T14:22:10.000Z">
+<meta property="article:modified_time" content="2021-12-20T13:45:52.853Z">
 <meta property="article:author" content="Dlyan">
-<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="HTTP">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>事件流、事件捕获、事件冒泡、事件委托或事件代理 - Dylan&#39;s blog</title>
+  <title>http常用状态码 - Dylan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,12 +182,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/dylan/imgs/event/big.png#') no-repeat center center;
+         style="background: url('/dylan/imgs/http/big.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="事件流、事件捕获、事件冒泡、事件委托或事件代理">
+            <span class="h2" id="subtitle" title="http常用状态码">
               
             </span>
 
@@ -202,8 +202,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-12-03 20:24" pubdate>
-        2021年12月3日 晚上
+      <time datetime="2021-12-10 22:22" pubdate>
+        2021年12月10日 晚上
       </time>
     </span>
   
@@ -213,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      1.1k 字
     </span>
   
 
@@ -222,7 +222,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      4 分钟
     </span>
   
 
@@ -259,40 +259,42 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">事件流、事件捕获、事件冒泡、事件委托或事件代理</h1>
+            <h1 style="display: none">http常用状态码</h1>
             
             <div class="markdown-body">
-              <h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>事件流分为三个阶段：捕获阶段、目标阶段、冒泡阶段</p>
-<p>捕获阶段：从最外层一层一层到目标</p>
-<p>目标阶段：执行目标的事件</p>
-<p>冒泡阶段：从目标一层一层到最外层</p>
-<p>事件函数的执行默认都是在冒泡阶段执行</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;style&gt;<br>    #a &#123;<br>        <span class="hljs-attr">width</span>: 300px;<br>        height: 300px;<br>        background-color: black;<br>    &#125;<br><br>    #b &#123;<br>        <span class="hljs-attr">width</span>: 200px;<br>        height: 200px;<br>        background-color: blue;<br>    &#125;<br><br>    #c &#123;<br>        <span class="hljs-attr">width</span>: 100px;<br>        height: 100px;<br>        background-color: red;<br>    &#125;<br>&lt;/style&gt;<br><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a&quot;</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;b&quot;</span>&gt;</span></span><br><span class="xml">            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;c&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="javascript"><span class="xml">a.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="javascript"><span class="xml">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;a&#x27;</span>)</span></span><br><span class="javascript"><span class="xml">&#125;)</span></span><br><span class="javascript"><span class="xml">b.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="javascript"><span class="xml">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;b&#x27;</span>)</span></span><br><span class="javascript"><span class="xml">&#125;)</span></span><br><span class="javascript"><span class="xml">c.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="javascript"><span class="xml">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;c&#x27;</span>)</span></span><br><span class="javascript"><span class="xml">&#125;)</span></span><br><span class="javascript"><span class="xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>点击红色方块(c元素)，打印顺序为 cba</p>
-</blockquote>
-<p>说明事件函数的执行是在冒泡阶段执行，给 addEventListener 第三个参数设为 true 时。</p>
-<blockquote>
-<p>点击红色方块(c元素)，打印顺序为abc</p>
-</blockquote>
-<p>说明事件函数的执行在捕获阶段。</p>
-<h2 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h2><p>顾名思义，将子级的事件委托给父级完成，通过 e.target 实现</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-keyword">let</span> e = e || event<br>    <span class="hljs-keyword">let</span> target = e.target || e.srcElement<br>    <span class="hljs-built_in">console</span>.log(target)<br>&#125;)<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>点击红色方块(c元素)，打印结果是 c 的 dom 对象</p>
-</blockquote>
-<p>代码中并未给元素c绑定事件函数，而打印出了 c 的 dom 对象，说明 c 的事件委托给了 a </p>
-<h2 id="取消冒泡"><a href="#取消冒泡" class="headerlink" title="取消冒泡"></a>取消冒泡</h2><p>bubbles：event 的冒泡属性，默认为 true。</p>
-<p>stopPropagation：取消事件冒泡和委托函数的执行。</p>
-<p>stopImmediatePropagation：取消事件冒泡和委托函数的执行，并中断同一事件函数的执行（比如在 a 元素的第一个点击事件执行 e.stopImmediatePropagation() ，则 a 元素的第二个点击事件不会执行）</p>
-<p>cancelBubble: e.cancelBubble = true 取消事件冒泡</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;a&#x27;</span>)<br>&#125;)<br>b.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;b&#x27;</span>)<br>&#125;)<br>c.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(e.bubbles)<br>    e.stopPropagation() <span class="hljs-comment">//或者 e.cancelbubbles = true</span><br> 	e.stopImmediatePropagation()<br>&#125;)<br>c.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;c&#x27;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>点击红色方块(c元素)，只会输出 true</p>
-</blockquote>
+              <h2 id="类别"><a href="#类别" class="headerlink" title="类别"></a>类别</h2><p>1xx，信息性状态码，接受的请求正在处理。</p>
+<p>2xx，成功状态码，请求正常处理完毕。</p>
+<p>3xx，重定向，需要进行附加操作以完成请求。</p>
+<p>4xx，客户端错误，客户端请求出错，服务器无法处理请求。</p>
+<p>5xx，服务器错误，服务器处理请求出错。</p>
+<h2 id="2xx"><a href="#2xx" class="headerlink" title="2xx"></a>2xx</h2><p>200：请求成功，表明服务器成功处理了请求。</p>
+<p>201：作为 http post 请求的结果，已在服务器上成功创建了一个或多个新资源。</p>
+<p>202：服务器已接收请求，但尚未处理。通常用于还有异步任务需要执行的情况，先返回202。</p>
+<p>204：服务器成功处理了请求，但没有返回任何内容。</p>
+<p>206：表示客户端进行了范围请求，并且服务器成功执行了这部分的get请求。</p>
+<h2 id="3xx"><a href="#3xx" class="headerlink" title="3xx"></a>3xx</h2><p>300：针对请求，服务器可执行多种操作。</p>
+<p>301：永久重定向。</p>
+<p>302：临时重定向。</p>
+<p>303:303与302状态码有着相同的功能，但303状态码明确表示客户端应当采用get方法获取资源。常用于将post请求重定向到get请求，比如你上传了一份个人信息，服务器回发一个303响应，将你导向一个“上传成功”页面。</p>
+<h2 id="301和302的区别"><a href="#301和302的区别" class="headerlink" title="301和302的区别"></a>301和302的区别</h2><p>301比较常用的场景是使用域名跳转。比如，访问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">http://www.baidu.com</a> 会跳转到 <a target="_blank" rel="noopener" href="https://www.baidu.com./">https://www.baidu.com。</a></p>
+<p>302用来做临时跳，比如未登录的用户访问用户中心重定向到登录页面。</p>
+<h2 id="302和307的区别"><a href="#302和307的区别" class="headerlink" title="302和307的区别"></a>302和307的区别</h2><p>由于历史的原因，用户代理可能会在重定向后的请求中把post方法改为get方法，如果不想这样，应该使用307状态码。</p>
+<h2 id="301和308的区别"><a href="#301和308的区别" class="headerlink" title="301和308的区别"></a>301和308的区别</h2><p>308状态码不允许浏览器将原本为post的请求重定向到get请求上。</p>
+<h2 id="4xx"><a href="#4xx" class="headerlink" title="4xx"></a>4xx</h2><p>400：该状态码表示请求文中存在错误。但浏览器会像200一样对待该状态码。</p>
+<p>401：表示发送的请求需要有通过HTTP认证的认证信息，比如token失效就会出现这个问题。</p>
+<p>403：被拒绝，表明对请求资源的访问被服务器拒绝了。没有权限的问题。</p>
+<p>404：找不到，表明服务器上无法找到请求的资源，也可能是拒绝请求但不想说明原因。</p>
+<p>409：表示因为请求存在冲突无法处理该请求，例如多个同步更新之间的编辑冲突。</p>
+<p>415：请求资源类型 content-type 不支持。</p>
+<p>418：在项目中用作彩蛋。</p>
+<p>422：语法正确，有语义错误。用户名密码错误，验证码错误等。</p>
+<p>429：用户在给定的时间内发送了太多的请求。皆在用于网络限速。</p>
+<h2 id="5xx"><a href="#5xx" class="headerlink" title="5xx"></a>5xx</h2><p>500：服务器本身发生错误，可能是web应用存在的bug或某些临时的故障。</p>
+<p>502：通常意味着一两个机器已经不正确，简单点说，就是机器挂掉了。执行请求的时候，却收到了上游服务器的无效相应。</p>
+<p>503：服务器目前无法使用，临时性的服务器维护/过载。通常刷新客户端便好。</p>
+<p>504：请求超时。</p>
+<h2 id="502和504的区别"><a href="#502和504的区别" class="headerlink" title="502和504的区别"></a>502和504的区别</h2><p>503表示网关可用，但是请求超时。</p>
+<p>502表示没有可用的网关。</p>
 
             </div>
             <hr>
@@ -310,7 +312,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/dylan/tags/JavaScript/">JavaScript</a>
+                      <a class="hover-with-bg" href="/dylan/tags/HTTP/">HTTP</a>
                     
                   </div>
                 
@@ -327,18 +329,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/dylan/2021/12/10/http/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">http常用状态码</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/dylan/2021/11/26/typeof/">
-                        <span class="hidden-mobile">使用Object.prototype.toString实现myTypeof</span>
+                      <a href="/dylan/2021/12/03/event/">
+                        <span class="hidden-mobile">事件流、事件捕获、事件冒泡、事件委托或事件代理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
