@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Javascript中的错误类型</title>
+    <link href="/dylan/2021/12/16/error/"/>
+    <url>/dylan/2021/12/16/error/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><p><code>Error</code>是最基本的错误类型，其他的错误类型都继承自该类型。因此，所有错误的类型共享了一组相同的属性。 这个类型的错误很少见。一般使用开发人员自定义抛出的错误。</p><h2 id="EvalError"><a href="#EvalError" class="headerlink" title="EvalError"></a>EvalError</h2><p>这个错误会在使用<code>eval()</code>函数发生异常时候抛出。两种情况会出错：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">new</span> <span class="hljs-built_in">eval</span>();<br><span class="hljs-built_in">eval</span> = foo;<br></code></pre></td></tr></table></figure><p>上面两个的意思结合就是没有直接调用<code>eval</code>函数，而是<code>new</code>或者是重新赋值 这个错误基本上不会遇到，因为<code>eval</code>函数本来用的就不多。不过需要注意的是，<code>eval</code>是一个关键字。</p><h2 id="RangeError"><a href="#RangeError" class="headerlink" title="RangeError"></a>RangeError</h2><p>这个错误会在数值超出相应范围时触发。比如使用<code>new Array()</code>的时候传递一个负数或者是超过数组最大长度（4,294,967,295）的数，比如Number.MAX_VALUE，Number.MIN_VALUE。注意递归爆炸也有这个错误。</p><h2 id="ReferenceError"><a href="#ReferenceError" class="headerlink" title="ReferenceError"></a>ReferenceError</h2><p>这个错误一般就是出现在变量找不到的情况，比如：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = b;<br>Uncaught <span class="hljs-built_in">ReferenceError</span>: b is not defined<br></code></pre></td></tr></table></figure><p>这时候就需要检查一下一个变量了</p><h2 id="SyntaxError"><a href="#SyntaxError" class="headerlink" title="SyntaxError"></a>SyntaxError</h2><p>当Javascript语言解析代码时,Javascript引擎发现了不符合语法规范的tokens或token顺序时抛出SyntaxError。</p><h2 id="TypeError"><a href="#TypeError" class="headerlink" title="TypeError"></a>TypeError</h2><p>这个错误在JavaScript中是经常遇到的，不管是初学者还是老手。在变量中保存着以外的类型时，或者在访问不存在的方法时。都会导致这种错误。但是归根结底还是由于在执行特定于类型的操作时，变量的类型并不符合要求所致。比如：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> o = <span class="hljs-keyword">new</span> <span class="hljs-number">10</span>;<br>a.style.widht = <span class="hljs-string">&quot;10px&quot;</span>;<br></code></pre></td></tr></table></figure><p>关于设置样式这个东西，新手会遇到很多，一般这都是由获取不到元素导致的。</p><h2 id="URIError"><a href="#URIError" class="headerlink" title="URIError"></a>URIError</h2><p>在使用encodeURI或者decodeURI因为URL格式不正确时，就会导致URIError错误。这种错误也很少见。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JavaScript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>http常用状态码</title>
     <link href="/dylan/2021/12/10/http/"/>
     <url>/dylan/2021/12/10/http/</url>
