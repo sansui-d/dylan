@@ -13,23 +13,23 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="Javascript中常见的错误类型">
+  <meta name="description" content="正向代理与反向代理是什么">
   <meta name="author" content="Dlyan">
   <meta name="keywords" content="blog">
-  <meta name="description" content="Javascript中常见的错误类型">
+  <meta name="description" content="正向代理与反向代理是什么">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Javascript中的错误类型">
-<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/16/error/index.html">
+<meta property="og:title" content="正向代理与反向代理">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/18/agent/index.html">
 <meta property="og:site_name" content="Dylan&#39;s blog">
-<meta property="og:description" content="Javascript中常见的错误类型">
+<meta property="og:description" content="正向代理与反向代理是什么">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-16T14:24:14.000Z">
-<meta property="article:modified_time" content="2021-12-27T13:18:46.910Z">
+<meta property="article:published_time" content="2021-12-18T12:24:00.000Z">
+<meta property="article:modified_time" content="2021-12-27T13:19:06.392Z">
 <meta property="article:author" content="Dlyan">
 <meta property="article:tag" content="综合">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>Javascript中的错误类型 - Dylan&#39;s blog</title>
+  <title>正向代理与反向代理 - Dylan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,12 +182,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/dylan/imgs/error/big.png') no-repeat center center;
+         style="background: url('/dylan/imgs/agent/big.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Javascript中的错误类型">
+            <span class="h2" id="subtitle" title="正向代理与反向代理">
               
             </span>
 
@@ -202,8 +202,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-12-16 22:24" pubdate>
-        2021年12月16日 晚上
+      <time datetime="2021-12-18 20:24" pubdate>
+        2021年12月18日 晚上
       </time>
     </span>
   
@@ -213,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      804 字
+      1.2k 字
     </span>
   
 
@@ -222,7 +222,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3 分钟
+      4 分钟
     </span>
   
 
@@ -259,25 +259,33 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Javascript中的错误类型</h1>
+            <h1 style="display: none">正向代理与反向代理</h1>
             
             <div class="markdown-body">
-              <h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><p><code>Error</code>是最基本的错误类型，其他的错误类型都继承自该类型。因此，所有错误的类型共享了一组相同的属性。 这个类型的错误很少见。一般使用开发人员自定义抛出的错误。</p>
-<h2 id="EvalError"><a href="#EvalError" class="headerlink" title="EvalError"></a>EvalError</h2><p>这个错误会在使用<code>eval()</code>函数发生异常时候抛出。两种情况会出错：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">new</span> <span class="hljs-built_in">eval</span>();<br><span class="hljs-built_in">eval</span> = foo;<br></code></pre></td></tr></table></figure>
-
-<p>上面两个的意思结合就是没有直接调用<code>eval</code>函数，而是<code>new</code>或者是重新赋值 这个错误基本上不会遇到，因为<code>eval</code>函数本来用的就不多。不过需要注意的是，<code>eval</code>是一个关键字。</p>
-<h2 id="RangeError"><a href="#RangeError" class="headerlink" title="RangeError"></a>RangeError</h2><p>这个错误会在数值超出相应范围时触发。比如使用<code>new Array()</code>的时候传递一个负数或者是超过数组最大长度（4,294,967,295）的数，比如Number.MAX_VALUE，Number.MIN_VALUE。注意递归爆炸也有这个错误。</p>
-<h2 id="ReferenceError"><a href="#ReferenceError" class="headerlink" title="ReferenceError"></a>ReferenceError</h2><p>这个错误一般就是出现在变量找不到的情况，比如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = b;<br>Uncaught <span class="hljs-built_in">ReferenceError</span>: b is not defined<br></code></pre></td></tr></table></figure>
-
-<p>这时候就需要检查一下一个变量了</p>
-<h2 id="SyntaxError"><a href="#SyntaxError" class="headerlink" title="SyntaxError"></a>SyntaxError</h2><p>当Javascript语言解析代码时,Javascript引擎发现了不符合语法规范的tokens或token顺序时抛出SyntaxError。</p>
-<h2 id="TypeError"><a href="#TypeError" class="headerlink" title="TypeError"></a>TypeError</h2><p>这个错误在JavaScript中是经常遇到的，不管是初学者还是老手。在变量中保存着以外的类型时，或者在访问不存在的方法时。都会导致这种错误。但是归根结底还是由于在执行特定于类型的操作时，变量的类型并不符合要求所致。比如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> o = <span class="hljs-keyword">new</span> <span class="hljs-number">10</span>;<br>a.style.widht = <span class="hljs-string">&quot;10px&quot;</span>;<br></code></pre></td></tr></table></figure>
-
-<p>关于设置样式这个东西，新手会遇到很多，一般这都是由获取不到元素导致的。</p>
-<h2 id="URIError"><a href="#URIError" class="headerlink" title="URIError"></a>URIError</h2><p>在使用encodeURI或者decodeURI因为URL格式不正确时，就会导致URIError错误。这种错误也很少见。</p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>说到代理，首先我们要明确一个概念，所谓代理就是一个代表、一个渠道；</p>
+<p>此时就涉及到两个角色，一个是被代理角色，一个是目标角色，被代理角色通过这个代理访问目标角色完成一些任务的过程称为代理操作过程；如同生活中的专卖店~客人到adidas专卖店买了一双鞋，这个专卖店就是代理，被代理角色就是adidas厂家，目标角色就是用户。</p>
+<h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>正向代理也是大家最常接触的到的代理模式。</p>
+<p>在如今的网络环境下，我们如果由于技术需要要去访问国外的某些网站，此时你会发现位于国外的某网站我们通过浏览器是没有办法访问的，此时大家可能都会用一个代理工具进行访问，这个代理工具就是找到一个可以访问国外网站的代理服务器，我们将请求发送给代理服务器，代理服务器去访问国外的网站，然后将访问到的数据传递给我们！</p>
+<p>上述这样的代理模式称为正向代理，正向代理最大的特点是客户端非常明确要访问的服务器地址；服务器只清楚请求来自哪个代理服务器，而不清楚来自哪个具体的客户端；正向代理模式屏蔽或者隐藏了真实客户端信息。</p>
+<p>总结来说：正向代理，”它代理的是客户端，代客户端发出请求”，是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。</p>
+<p>正向代理的用途：</p>
+<ul>
+<li>访问原来无法访问的资源，如Google</li>
+<li>可以做缓存，加速访问资源</li>
+<li>对客户端访问授权，上网进行认证</li>
+<li>代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息</li>
+</ul>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>明白了什么是正向代理，我们继续看关于反向代理的处理方式。</p>
+<p>例如某宝网站，每天同时连接到网站的访问人数已经爆表，单个服务器远远不能满足人民日益增长的购买欲望了，此时就出现了一个大家耳熟能详的名词：分布式部署；</p>
+<p>也就是通过部署多台服务器来解决访问人数限制的问题；某宝网站中大部分功能也是直接使用Nginx进行反向代理实现的，并且通过封装Nginx和其他的组件之后起了个高大上的名字：Tengine，有兴趣的童鞋可以访问Tengine的官网查看具体的信息：<a target="_blank" rel="noopener" href="http://tengine.taobao.org/%E3%80%82">http://tengine.taobao.org/。</a></p>
+<p>多个客户端给服务器发送的请求，Nginx服务器接收到之后，按照一定的规则分发给了后端的业务处理服务器进行处理了。此时，请求的来源（也就是客户端）是明确的，但是请求具体由哪台服务器处理的并不明确了，Nginx扮演的就是一个反向代理角色。</p>
+<p>客户端是无感知代理的存在的，反向代理对外都是透明的，访问者并不知道自己访问的是一个代理。因为客户端不需要任何配置就可以访问。</p>
+<p>反向代理，”它代理的是服务端，代服务端接收请求”，主要用于服务器集群分布式部署的情况下，反向代理隐藏了服务器的信息。</p>
+<p>反向代理的作用：</p>
+<ul>
+<li>保证内网的安全，通常将反向代理作为公网访问地址，Web服务器是内网</li>
+<li>负载均衡，通过反向代理服务器来优化网站的负载</li>
+</ul>
 
             </div>
             <hr>
@@ -312,18 +320,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/dylan/2021/12/17/recovery/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">浏览器回收机制</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/dylan/2021/12/10/http/">
-                        <span class="hidden-mobile">http常用状态码</span>
+                      <a href="/dylan/2021/12/17/recovery/">
+                        <span class="hidden-mobile">浏览器回收机制</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
