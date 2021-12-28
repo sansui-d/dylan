@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/dylan/img/favicon.ico">
+  <link rel="icon" href="/dylan/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="css选择器有哪些？优先级分别是什么？哪些属性可以继承？">
+  <meta name="author" content="Dlyan">
+  <meta name="keywords" content="blog">
+  <meta name="description" content="css选择器有哪些？优先级分别是什么？哪些属性可以继承？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css选择器">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/19/selector/index.html">
+<meta property="og:site_name" content="Dylan&#39;s blog">
+<meta property="og:description" content="css选择器有哪些？优先级分别是什么？哪些属性可以继承？">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-19T12:24:20.000Z">
+<meta property="article:modified_time" content="2021-12-28T12:37:18.771Z">
+<meta property="article:author" content="Dlyan">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>css选择器 - Dylan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/dylan/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/dylan/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"sansui-d.github.io","root":"/dylan/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","app_key":"odfvj4BfvPjWMc4l7nuHODEK","server_url":"https://9xwtxrj0.lc-cn-n1-shared.com","path":"window.location.pathname"}},"search_path":"/dylan/local-search.xml"};
+  </script>
+  <script  src="/dylan/js/utils.js" ></script>
+  <script  src="/dylan/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/dylan/">
+      <strong>Dylan</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/dylan/imgs/selector/big.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="css选择器">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Dlyan
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-19 20:24" pubdate>
+        2021年12月19日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      9 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">css选择器</h1>
+            
+            <div class="markdown-body">
+              <h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><p>CSS选择器是CSS规则的第一部分</p>
+<p>它是元素和其他部分组合起来告诉浏览器哪个HTML元素应当是被选为应用规则中的CSS属性值的方式</p>
+<p>选择器所选择的元素，叫做“选择器的对象”</p>
+<p>我们从一个<code>Html</code>结构开始</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;one&quot;</span>&gt;</span><br>	    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;one_1&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;one_1&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;two&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;two&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;two&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>关于<code>css</code>属性选择器常用的有：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">id选择器（<span class="hljs-comment">#box），选择id为box的元素</span><br>类选择器（.<span class="hljs-literal">one</span>），选择类名为<span class="hljs-literal">one</span>的所有元素<br>标签选择器（<span class="hljs-keyword">div</span>），选择标签为<span class="hljs-keyword">div</span>的所有元素<br>后代选择器（<span class="hljs-comment">#box div），选择id为box元素内部所有的div元素</span><br>子选择器（.<span class="hljs-literal">one</span>&gt;one_1），选择父元素为.<span class="hljs-literal">one</span>的所有.one_1的元素<br>相邻同胞选择器（.<span class="hljs-literal">one</span>+.<span class="hljs-literal">two</span>），选择紧接在.<span class="hljs-literal">one</span>之后的所有.<span class="hljs-literal">two</span>元素<br>群组选择器（<span class="hljs-keyword">div</span>,p），选择<span class="hljs-keyword">div</span>、p的所有元素<br></code></pre></td></tr></table></figure>
+
+<p>还有一些使用频率相对没那么多的选择器：</p>
+<ul>
+<li>伪类选择器</li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs applescript">link ：选择未被访问的链接<br>visited：选取已被访问的链接<br>active：选择活动链接<br>hover ：鼠标指针浮动在上面的元素<br>focus ：选择具有焦点的<br><span class="hljs-keyword">first</span>-child：父元素的首个子元素<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>伪元素选择器</li>
+</ul>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-keyword">first</span>-letter ：用于选取指定选择器的首字母<br><span class="hljs-keyword">first</span>-<span class="hljs-built_in">line</span> ：选取指定选择器的首行<br><span class="hljs-keyword">before</span> : 选择器在被选元素的内容前面插入内容<br><span class="hljs-keyword">after</span> : 选择器在被选元素的内容后面插入内容<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>属性选择器</li>
+</ul>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs glsl">[<span class="hljs-keyword">attribute</span>] 选择带有<span class="hljs-keyword">attribute</span>属性的元素<br>[<span class="hljs-keyword">attribute</span>=value] 选择所有使用<span class="hljs-keyword">attribute</span>=value的元素<br>[<span class="hljs-keyword">attribute</span>~=value] 选择<span class="hljs-keyword">attribute</span>属性包含value的元素<br>[<span class="hljs-keyword">attribute</span>|=value]：选择<span class="hljs-keyword">attribute</span>属性以value开头的元素<br></code></pre></td></tr></table></figure>
+
+<p>在<code>CSS3</code>中新增的选择器有如下：</p>
+<ul>
+<li>层次选择器（p~ul），选择前面有p元素的每个ul元素</li>
+<li>伪类选择器</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">first</span>-of-<span class="hljs-built_in">type</span> 父元素的首个元素<br><span class="hljs-keyword">last</span>-of-<span class="hljs-built_in">type</span> 父元素的最后一个元素<br><span class="hljs-keyword">only</span>-of-<span class="hljs-built_in">type</span> 父元素的特定类型的唯一子元素<br><span class="hljs-keyword">only</span>-child 父元素中唯一子元素<br>nth-child(n) 选择父元素中第<span class="hljs-keyword">N</span>个子元素<br>nth-<span class="hljs-keyword">last</span>-of-<span class="hljs-built_in">type</span>(n) 选择父元素中第<span class="hljs-keyword">N</span>个子元素，从后往前<br><span class="hljs-keyword">last</span>-child 父元素的最后一个元素<br>root 设置HTML文档<br><span class="hljs-built_in">empty</span> 指定空的元素<br>enabled 选择被禁用元素<br>disabled 选择被禁用元素<br>checked 选择选中的元素<br>not(selector) 选择非 <span class="hljs-symbol">&lt;selector&gt;</span> 元素的所有元素<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>属性选择器</li>
+</ul>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">[<span class="hljs-keyword">attribute</span>*=value]：选择<span class="hljs-keyword">attribute</span>属性值包含value的所有元素<br>[<span class="hljs-keyword">attribute</span>^=value]：选择<span class="hljs-keyword">attribute</span>属性开头为value的所有元素<br>[<span class="hljs-keyword">attribute</span>$=value]：选择<span class="hljs-keyword">attribute</span>属性结尾为value的所有元素<br></code></pre></td></tr></table></figure>
+
+<h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>相信大家对<code>CSS</code>选择器的优先级都不陌生：</p>
+<blockquote>
+<p>内联 &gt; ID选择器 &gt; 类选择器 &gt; 标签选择器</p>
+</blockquote>
+<p>到具体的计算层⾯，优先级是由 A 、B、C、D 的值来决定的，其中它们的值计算规则如下：</p>
+<ul>
+<li>如果存在内联样式，那么 A = 1, 否则 A = 0</li>
+<li>B的值等于 ID选择器出现的次数</li>
+<li>C的值等于 类选择器 和 属性选择器 和 伪类 出现的总次数</li>
+<li>D 的值等于 标签选择器 和 伪元素 出现的总次数</li>
+</ul>
+<p>这里举个例子：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-id">#nav-global</span> &gt; <span class="hljs-selector-tag">ul</span> &gt; <span class="hljs-selector-tag">li</span> &gt; <span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.nav-link</span><br></code></pre></td></tr></table></figure>
+
+<p>套用上面的算法，依次求出 <code>A</code> <code>B</code> <code>C</code> <code>D</code> 的值：</p>
+<ul>
+<li>因为没有内联样式 ，所以 A = 0</li>
+<li>ID选择器总共出现了1次， B = 1</li>
+<li>类选择器出现了1次， 属性选择器出现了0次，伪类选择器出现0次，所以 C = (1 + 0 + 0) = 1</li>
+<li>标签选择器出现了3次， 伪元素出现了0次，所以 D = (3 + 0) = 3</li>
+</ul>
+<p>上面算出的<code>A</code> 、 <code>B</code>、<code>C</code>、<code>D</code> 可以简记作：<code>(0, 1, 1, 3)</code></p>
+<p>知道了优先级是如何计算之后，就来看看比较规则：</p>
+<ul>
+<li>从左往右依次进行比较 ，较大者优先级更高</li>
+<li>如果相等，则继续往右移动一位进行比较</li>
+<li>如果4位全部相等，则后面的会覆盖前面的</li>
+</ul>
+<p>经过上面的优先级计算规则，我们知道内联样式的优先级最高，如果外部样式需要覆盖内联样式，就需要使用<code>!important</code></p>
+<h2 id="继承属性"><a href="#继承属性" class="headerlink" title="继承属性"></a>继承属性</h2><p>在<code>css</code>中，继承是指的是给父元素设置一些属性，后代元素会自动拥有这些属性 关于继承属性，可以分成：</p>
+<ul>
+<li>字体系列属性</li>
+</ul>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">font</span>:组合字体<br><span class="hljs-built_in">font</span>-family:规定元素的字体系列<br><span class="hljs-built_in">font</span>-weight:设置字体的粗细<br><span class="hljs-built_in">font</span>-size:设置字体的尺寸<br><span class="hljs-built_in">font</span>-<span class="hljs-built_in">style</span>:定义字体的风格<br><span class="hljs-built_in">font</span>-variant:偏大或偏小的字体<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>文本系列属性</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">text-indent</span>：文本缩进<br><span class="hljs-attribute">text-align</span>：文本水平对齐<br><span class="hljs-attribute">line-height</span>：行高<br><span class="hljs-attribute">word-spacing</span>：增加或减少单词间的空白<br><span class="hljs-attribute">letter-spacing</span>：增加或减少字符间的空白<br><span class="hljs-attribute">text-transform</span>：控制文本大小写<br><span class="hljs-attribute">direction</span>：规定文本的书写方向<br><span class="hljs-attribute">color</span>：文本颜色<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>元素可见性</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">visibility</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>表格布局属性</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">caption-side</span>：定位表格标题位置<br><span class="hljs-attribute">border-collapse</span>：合并表格边框<br><span class="hljs-attribute">border-spacing</span>：设置相邻单元格的边框间的距离<br><span class="hljs-attribute">empty-cells</span>：单元格的边框的出现与消失<br><span class="hljs-attribute">table-layout</span>：表格的宽度由什么决定<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>列表属性</li>
+</ul>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-built_in">list-style-type：文字前面的小点点样式</span><br><span class="hljs-built_in">list-style-position：小点点位置</span><br><span class="hljs-built_in">list-style：以上的属性可通过这属性集合</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>引用</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">quotes</span>：设置嵌套引用的引号类型<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>光标属性</li>
+</ul>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">cursor：箭头可以变成需要的形状<br></code></pre></td></tr></table></figure>
+
+<p>继承中比较特殊的几点：</p>
+<ul>
+<li>a 标签的字体颜色不能被继承</li>
+<li>h1-h6标签字体的大下也是不能被继承的</li>
+</ul>
+<h2 id="无继承的属性"><a href="#无继承的属性" class="headerlink" title="无继承的属性"></a>无继承的属性</h2><ul>
+<li>display</li>
+<li>文本属性：vertical-align、text-decoration</li>
+<li>盒子模型的属性：宽度、高度、内外边距、边框等</li>
+<li>背景属性：背景图片、颜色、位置等</li>
+<li>定位属性：浮动、清除浮动、定位position等</li>
+<li>生成内容属性：content、counter-reset、counter-increment</li>
+<li>轮廓样式属性：outline-style、outline-width、outline-color、outline</li>
+<li>页面样式属性：size、page-break-before、page-break-after</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/tags/CSS/">CSS</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/dylan/2021/12/18/agent/">
+                        <span class="hidden-mobile">正向代理与反向代理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","appKey":"odfvj4BfvPjWMc4l7nuHODEK","path":"window.location.pathname","placeholder":"Say something","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/dylan/js/events.js" ></script>
+<script  src="/dylan/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/dylan/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/dylan/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/dylan/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/dylan/js/boot.js" ></script>
+
+
+</body>
+</html>
