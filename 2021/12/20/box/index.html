@@ -13,23 +13,29 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="apply、call、bind的作用以及手写实现">
+  <meta name="description" content="盒子模型是什么?有哪些?">
   <meta name="author" content="Dlyan">
   <meta name="keywords" content="blog">
-  <meta name="description" content="apply、call、bind的作用以及手写实现">
+  <meta name="description" content="盒子模型是什么?有哪些?">
 <meta property="og:type" content="article">
-<meta property="og:title" content="手写apply、call、bind 笔记">
-<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/11/10/apply-call-bind/index.html">
+<meta property="og:title" content="盒模型">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/20/box/index.html">
 <meta property="og:site_name" content="Dylan&#39;s blog">
-<meta property="og:description" content="apply、call、bind的作用以及手写实现">
+<meta property="og:description" content="盒子模型是什么?有哪些?">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-10T12:24:14.000Z">
-<meta property="article:modified_time" content="2021-12-29T13:48:17.653Z">
+<meta property="og:image" content="https://sansui-d.github.io/dylan/imgs/box/1.png">
+<meta property="og:image" content="https://sansui-d.github.io/dylan/imgs/box/2.png">
+<meta property="og:image" content="https://sansui-d.github.io/dylan/imgs/box/3.png">
+<meta property="og:image" content="https://sansui-d.github.io/dylan/imgs/box/4.png">
+<meta property="article:published_time" content="2021-12-20T13:20:14.000Z">
+<meta property="article:modified_time" content="2021-12-29T13:48:40.132Z">
 <meta property="article:author" content="Dlyan">
-<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="HTML">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sansui-d.github.io/dylan/imgs/box/1.png">
   
-  <title>手写apply、call、bind 笔记 - Dylan&#39;s blog</title>
+  <title>盒模型 - Dylan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,12 +188,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/dylan/imgs/apply-call-bind/big.png') no-repeat center center;
+         style="background: url('/dylan/imgs/box/big.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="手写apply、call、bind 笔记">
+            <span class="h2" id="subtitle" title="盒模型">
               
             </span>
 
@@ -202,8 +208,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-10 20:24" pubdate>
-        2021年11月10日 晚上
+      <time datetime="2021-12-20 21:20" pubdate>
+        2021年12月20日 晚上
       </time>
     </span>
   
@@ -213,7 +219,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      1.3k 字
     </span>
   
 
@@ -222,7 +228,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      4 分钟
     </span>
   
 
@@ -259,40 +265,59 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">手写apply、call、bind 笔记</h1>
+            <h1 style="display: none">盒模型</h1>
             
             <div class="markdown-body">
-              <h2 id="call"><a href="#call" class="headerlink" title="call"></a>call</h2><p>call 方法使用一个指定的 this 值和单独给出的一个或多个参数来调用一个函数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> value=<span class="hljs-number">1</span>;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">x,y</span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.value)<br>&#125;<br><span class="hljs-keyword">var</span> obj=&#123;<br>    <span class="hljs-attr">value</span>: <span class="hljs-number">2</span><br>&#125;<br>foo(); <span class="hljs-comment">// 1 </span><br>foo.call(obj,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>);  <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>当对一个文档进行布局（layout）的时候，浏览器的渲染引擎会根据标准之一的 CSS 基础框盒模型（CSS basic box model），将所有元素表示为一个个矩形的盒子（box）</p>
+<p>一个盒子由四个部分组成：<code>content</code>、<code>padding</code>、<code>border</code>、<code>margin</code></p>
+<p><img src="/dylan/imgs/box/1.png" srcset="/dylan/img/loading.gif" lazyload alt="图1"></p>
+<p>显示文本和图像</p>
+<ul>
+<li><code>boreder</code>，即边框，围绕元素内容的内边距的一条或多条线，由粗细、样式、颜色三部分组成</li>
+<li><code>padding</code>，即内边距，清除内容周围的区域，内边距是透明的，取值不能为负，受盒子的<code>background</code>属性影响</li>
+<li><code>margin</code>，即外边距，在元素外创建额外的空白，空白通常指不能放其他元素的区域</li>
+</ul>
+<p>上述是一个从二维的角度观察盒子，下面再看看看三维图：</p>
+<p><img src="/dylan/imgs/box/2.png" srcset="/dylan/img/loading.gif" lazyload alt="图2"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"></span><br><span class="css"><span class="hljs-selector-class">.box</span> &#123;</span><br><span class="css">	<span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;</span><br><span class="css">	<span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;</span><br><span class="css">	<span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;</span><br><span class="css">&#125;</span><br><span class="css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">\</span>&quot;<span class="hljs-attr">box</span>\&quot;&gt;</span><br>盒子模型<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p>给 foo 函数绑定 call 方法，将 foo 函数里的 this 指向 obj ，所以<code>foo.call(obj,3,4)</code>输出结果为2</p>
-<p>特点：</p>
-<p>1.参数传递以逗号隔开</p>
-<p>2.立即执行</p>
-<h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><p>apply 方法与 call 类似</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> value=<span class="hljs-number">1</span>;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">x,y</span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.value)<br>&#125;<br><span class="hljs-keyword">var</span> obj=&#123;<br>    <span class="hljs-attr">value</span>: <span class="hljs-number">2</span><br>&#125;<br>foo(); <span class="hljs-comment">// 1 </span><br>foo.apply(obj,[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]);  <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+<p>当我们在浏览器查看元素时，却发现元素的大小变成了<code>240px</code></p>
+<p>这是因为，在<code>CSS</code>中，盒子模型可以分成：</p>
+<ul>
+<li>W3C 标准盒子模型</li>
+<li>IE 怪异盒子模型</li>
+</ul>
+<p>默认情况下，盒子模型为<code>W3C</code> 标准盒子模型</p>
+<h2 id="标准盒模型"><a href="#标准盒模型" class="headerlink" title="标准盒模型"></a>标准盒模型</h2><p>标准盒子模型，是浏览器默认的盒子模型</p>
+<p>下面看看标准盒子模型的模型图：</p>
+<p><img src="/dylan/imgs/box/3.png" srcset="/dylan/img/loading.gif" lazyload alt="图3"></p>
+<p>从上图可以看到：</p>
+<ul>
+<li>盒子总宽度 = width + padding + border + margin;</li>
+<li>盒子总高度 = height + padding + border + margin</li>
+</ul>
+<p>也就是，<code>width/height</code> 只是内容高度，不包含 <code>padding</code> 和 <code>border </code>值</p>
+<p>所以上面问题中，设置<code>width</code>为200px，但由于存在<code>padding</code>，但实际上盒子的宽度有240px</p>
+<h2 id="IE怪异盒模型"><a href="#IE怪异盒模型" class="headerlink" title="IE怪异盒模型"></a>IE怪异盒模型</h2><p><img src="/dylan/imgs/box/4.png" srcset="/dylan/img/loading.gif" lazyload alt="图4"></p>
+<p>从上图可以看到：</p>
+<ul>
+<li>盒子总宽度 = width + margin;</li>
+<li>盒子总高度 = height + margin;</li>
+</ul>
+<p>也就是，<code>width/height</code> 包含了 <code>padding </code>和 <code>border </code>值</p>
+<h3 id="box-sizing"><a href="#box-sizing" class="headerlink" title="box-sizing"></a>box-sizing</h3><p>CSS 中的 box-sizing 属性定义了引擎应该如何计算一个元素的总宽度和总高度</p>
+<p>语法：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">box</span>-sizing: <span class="hljs-built_in">content</span>-<span class="hljs-built_in">box</span>|<span class="hljs-built_in">border</span>-<span class="hljs-built_in">box</span>|inherit;<br></code></pre></td></tr></table></figure>
 
-<p>特点：</p>
-<p>1.参数传递以数组的形式</p>
-<p>2.立即执行</p>
-<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><p>bind 方法创建一个新的函数，也可以说是当前调用bind方法的函数的一个引用，这个函数的 this 被绑定为 bind 方法的第一个参数，其余参数为这个新函数的实参。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> value=<span class="hljs-number">1</span>;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">x,y</span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.value)<br>&#125;<br><span class="hljs-keyword">var</span> obj=&#123;<br>    <span class="hljs-attr">value</span>: <span class="hljs-number">2</span><br>&#125;<br><span class="hljs-keyword">var</span> bar=foo.bind(obj,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>);<br>bar(); <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>content-box 默认值，元素的 width/height 不包含padding，border，与标准盒子模型表现一致</li>
+<li>border-box 元素的 width/height 包含 padding，border，与怪异盒子模型表现一致</li>
+<li>inherit 指定 box-sizing 属性的值，应该从父元素继承</li>
+</ul>
+<p>回到上面的例子里，设置盒子为 border-box 模型</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"></span><br><span class="css"><span class="hljs-selector-class">.box</span> &#123;</span><br><span class="css">	<span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;</span><br><span class="css">	<span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;</span><br><span class="css">    <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;</span><br><span class="css">    <span class="hljs-attribute">box-sizing</span>: border-box;</span><br><span class="css">&#125;</span><br><span class="css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">\</span>&quot;<span class="hljs-attr">box</span>\&quot;&gt;</span><br>盒子模型<br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p>当我们使用 bind 方法创建一个新函数，这个新函数再使用 call 或者 apply 来更改 this 绑定时，还是以 bind 绑定的 this 为准。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> value=<span class="hljs-number">1</span>;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params">x,y</span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.value)<br>&#125;<br><span class="hljs-keyword">var</span> obj=&#123;<br>    <span class="hljs-attr">value</span>: <span class="hljs-number">2</span><br>&#125;<br><span class="hljs-keyword">var</span> o=&#123;<br>    <span class="hljs-attr">value</span>: <span class="hljs-number">3</span><br>&#125;<br><span class="hljs-keyword">var</span> bar=foo.bind(obj,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>);<br>bar.call(o); <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>相同点：</p>
-<ol>
-<li>都会更改this的绑定</li>
-</ol>
-<p>不同点：</p>
-<ol>
-<li>call 和 apply 会立即执行函数，bind 不会。</li>
-<li>apply 方法的传参格式为数组，call 和 bind 不是。</li>
-</ol>
-<h2 id="手写实现"><a href="#手写实现" class="headerlink" title="手写实现"></a>手写实现</h2><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">var</span> name = <span class="hljs-number">1</span><br>    Function.prototype.myCall = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx, <span class="hljs-rest_arg">...args</span>)</span> </span>&#123;<br>        let fn = Symbol(<span class="hljs-number">1</span>)<br>        ctx[fn] = <span class="hljs-keyword">this</span><br>        ctx[fn](...args)<br>        <span class="hljs-keyword">delete</span> ctx[fn]<br>    &#125;<br>    Function.prototype.myApply = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx, args = [])</span> </span>&#123;<br>        let fn = Symbol(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">if</span>(args&amp;&amp;!(args <span class="hljs-keyword">instanceof</span> Array))&#123;<br>            <span class="hljs-keyword">throw</span>(<span class="hljs-string">&#x27;参数不是数组&#x27;</span>)<br>        &#125;<br>        ctx[fn] = <span class="hljs-keyword">this</span><br>        ctx[fn](...args)<br>        <span class="hljs-keyword">delete</span> ctx[fn]<br>    &#125;<br>    Function.prototype.myBind = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ctx, <span class="hljs-rest_arg">...args1</span>)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> (...args2)=&gt;&#123;<br>            let fn = Symbol(<span class="hljs-number">1</span>)<br>            ctx[fn] = <span class="hljs-keyword">this</span><br>            ctx[fn](...args1.concat(args2))<br>            <span class="hljs-keyword">delete</span> ctx[fn]<br>        &#125;<br>    &#125;<br>    obj2 = &#123;<br>        name: <span class="hljs-number">2</span><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span><span class="hljs-params">(<span class="hljs-rest_arg">...args</span>)</span> </span>&#123;<br>        console.log(<span class="hljs-keyword">this</span>.name, ...args)<br>    &#125;<br>    show(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)		<span class="hljs-comment">// 1 1 2 3</span><br>    show.myCall(obj2, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)		<span class="hljs-comment">// 2 1 2 3</span><br>    show.myApply(obj2, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])	<span class="hljs-comment">// 2 1 2 3</span><br>    show.myBind(obj2, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)()	<span class="hljs-comment">// 2 1 2 3</span><br></code></pre></td></tr></table></figure>
-
-<p><code>let fn = Symbol(1)</code> 的作用是为了避免覆盖，保证 fn 属性的唯一性，myApply 需要判断传入的参数是否为数组形式，myBind 需要返回一个函数，因为 bind 不是立即执行的，最后需要 <code>delete ctx[fn]</code> </p>
+<p>这时候，就可以发现盒子的所占据的宽度为200px</p>
 
             </div>
             <hr>
@@ -302,7 +327,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/dylan/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+                      <a class="hover-with-bg" href="/dylan/categories/%E9%9D%A2%E8%AF%95/">面试</a>
                     
                   </div>
                 
@@ -310,7 +335,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/dylan/tags/JavaScript/">JavaScript</a>
+                      <a class="hover-with-bg" href="/dylan/tags/CSS/">CSS</a>
+                    
+                      <a class="hover-with-bg" href="/dylan/tags/HTML/">HTML</a>
                     
                   </div>
                 
@@ -327,18 +354,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/dylan/2021/11/10/new/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">实现 new 笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/dylan/2021/11/08/BFC/">
-                        <span class="hidden-mobile">BFC 笔记</span>
+                      <a href="/dylan/2021/12/19/selector/">
+                        <span class="hidden-mobile">css选择器</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
