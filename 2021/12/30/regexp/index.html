@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/dylan/img/favicon.ico">
+  <link rel="icon" href="/dylan/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="什么是正则表达式，使用场景">
+  <meta name="author" content="Dlyan">
+  <meta name="keywords" content="blog">
+  <meta name="description" content="什么是正则表达式，使用场景">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是正则表达式">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/30/regexp/index.html">
+<meta property="og:site_name" content="Dylan&#39;s blog">
+<meta property="og:description" content="什么是正则表达式，使用场景">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-30T11:50:50.000Z">
+<meta property="article:modified_time" content="2022-01-06T12:45:46.135Z">
+<meta property="article:author" content="Dlyan">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>什么是正则表达式 - Dylan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/dylan/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/dylan/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"sansui-d.github.io","root":"/dylan/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","app_key":"odfvj4BfvPjWMc4l7nuHODEK","server_url":"https://9xwtxrj0.lc-cn-n1-shared.com","path":"window.location.pathname"}},"search_path":"/dylan/local-search.xml"};
+  </script>
+  <script  src="/dylan/js/utils.js" ></script>
+  <script  src="/dylan/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/dylan/">
+      <strong>Dylan</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/dylan/imgs/regexp/big.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="什么是正则表达式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Dlyan
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-30 19:50" pubdate>
+        2021年12月30日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">什么是正则表达式</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>正则表达式是一种用来匹配字符串的强有力的武器</p>
+<p>它的设计思想是用一种描述性的语言定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了，否则，该字符串就是不合法的</p>
+<p>在 <code>JavaScript</code>中，正则表达式也是对象，构建正则表达式有两种方式：</p>
+<p>1.字面量创建，其由包含在斜杠之间的模式组成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> re = <span class="hljs-regexp">/\d+/g</span>;<br></code></pre></td></tr></table></figure>
+
+<p>2.调用<code>RegExp</code>对象的构造函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">&quot;\\d+&quot;</span>,<span class="hljs-string">&quot;g&quot;</span>);<br><br><span class="hljs-keyword">const</span> rul = <span class="hljs-string">&quot;\\d+&quot;</span><br><span class="hljs-keyword">const</span> re1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(rul,<span class="hljs-string">&quot;g&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>使用构建函数创建，第一个参数可以是一个变量，遇到特殊字符<code>\</code>需要使用<code>\\</code>进行转义</p>
+<h2 id="匹配规则"><a href="#匹配规则" class="headerlink" title="匹配规则"></a>匹配规则</h2><p>常见的校验规则如下：</p>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>转义</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配输入的开始</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配输入的结束</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配前一个表达式 0 次或多次</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配前面一个表达式 1 次或者多次。等价于 <code>&#123;1,&#125;</code></td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配前面一个表达式 0 次或者 1 次。等价于<code>&#123;0,1&#125;</code></td>
+</tr>
+<tr>
+<td>.</td>
+<td>默认匹配除换行符之外的任何单个字符</td>
+</tr>
+<tr>
+<td>x(?=y)</td>
+<td>匹配’x’仅仅当’x’后面跟着’y’。这种叫做先行断言</td>
+</tr>
+<tr>
+<td>(?&lt;=y)x</td>
+<td>匹配’x’仅当’x’前面是’y’.这种叫做后行断言</td>
+</tr>
+<tr>
+<td>x(?!y)</td>
+<td>仅仅当’x’后面不跟着’y’时匹配’x’，这被称为正向否定查找</td>
+</tr>
+<tr>
+<td>(?&lt;!<em>y</em>)<em>x</em></td>
+<td>仅仅当’x’前面不是’y’时匹配’x’，这被称为反向否定查找</td>
+</tr>
+<tr>
+<td>x|y</td>
+<td>匹配‘x’或者‘y’</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>n 是一个正整数，匹配了前面一个字符刚好出现了 n 次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>n是一个正整数，匹配前一个字符至少出现了n次</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>n 和 m 都是整数。匹配前面的字符至少n次，最多m次</td>
+</tr>
+<tr>
+<td>[xyz]</td>
+<td>一个字符集合。匹配方括号中的任意字符</td>
+</tr>
+<tr>
+<td>[^xyz]</td>
+<td>匹配任何没有包含在方括号中的字符</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配一个词的边界，例如在字母和空格之间</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>匹配一个非单词边界</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配一个数字</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配一个非数字字符</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>匹配一个换页符</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>匹配一个换行符</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>匹配一个回车符</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配一个空白字符，包括空格、制表符、换页符和换行符</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配一个非空白字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配一个单字字符（字母、数字或者下划线）</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配一个非单字字符</td>
+</tr>
+</tbody></table>
+<h3 id="正则表达式标记"><a href="#正则表达式标记" class="headerlink" title="正则表达式标记"></a>正则表达式标记</h3><table>
+<thead>
+<tr>
+<th align="left">标志</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>g</code></td>
+<td align="left">全局搜索。</td>
+</tr>
+<tr>
+<td align="left"><code>i</code></td>
+<td align="left">不区分大小写搜索。</td>
+</tr>
+<tr>
+<td align="left"><code>m</code></td>
+<td align="left">多行搜索。</td>
+</tr>
+<tr>
+<td align="left"><code>s</code></td>
+<td align="left">允许 <code>.</code> 匹配换行符。</td>
+</tr>
+<tr>
+<td align="left"><code>u</code></td>
+<td align="left">使用<code>unicode</code>码的模式进行匹配。</td>
+</tr>
+<tr>
+<td align="left"><code>y</code></td>
+<td align="left">执行“粘性(<code>sticky</code>)”搜索,匹配从目标字符串的当前位置开始。</td>
+</tr>
+</tbody></table>
+<p>使用方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> re = <span class="hljs-regexp">/pattern/</span>flags;<br><span class="hljs-keyword">var</span> re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">&quot;pattern&quot;</span>, <span class="hljs-string">&quot;flags&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>在了解下正则表达式基本的之外，还可以掌握几个正则表达式的特性：</p>
+<h3 id="贪婪模式"><a href="#贪婪模式" class="headerlink" title="贪婪模式"></a>贪婪模式</h3><p>在了解贪婪模式前，首先举个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg = <span class="hljs-regexp">/ab&#123;1,3&#125;c/</span><br></code></pre></td></tr></table></figure>
+
+<p>在匹配过程中，尝试可能的顺序是从多往少的方向去尝试。首先会尝试<code>bbb</code>，然后再看整个正则是否能匹配。不能匹配时，吐出一个<code>b</code>，即在<code>bb</code>的基础上，再继续尝试，以此重复</p>
+<p>如果多个贪婪量词挨着，则深度优先搜索</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> string = <span class="hljs-string">&quot;12345&quot;</span>;<br><span class="hljs-keyword">const</span> regx = <span class="hljs-regexp">/(\d&#123;1,3&#125;)(\d&#123;1,3&#125;)/</span>;<br><span class="hljs-built_in">console</span>.log( string.match(reg) );<br><span class="hljs-comment">// =&gt; [&quot;12345&quot;, &quot;123&quot;, &quot;45&quot;, index: 0, input: &quot;12345&quot;]</span><br></code></pre></td></tr></table></figure>
+
+<p>其中，前面的<code>\d&#123;1,3&#125;</code>匹配的是”123”，后面的<code>\d&#123;1,3&#125;</code>匹配的是”45”</p>
+<h3 id="懒惰模式"><a href="#懒惰模式" class="headerlink" title="懒惰模式"></a>懒惰模式</h3><p>惰性量词就是在贪婪量词后面加个问号。表示尽可能少的匹配</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> string = <span class="hljs-string">&quot;12345&quot;</span>;<br><span class="hljs-keyword">var</span> regex = <span class="hljs-regexp">/(\d&#123;1,3&#125;?)(\d&#123;1,3&#125;)/</span>;<br><span class="hljs-built_in">console</span>.log( string.match(regex) );<br><span class="hljs-comment">// =&gt; [&quot;1234&quot;, &quot;1&quot;, &quot;234&quot;, index: 0, input: &quot;12345&quot;]</span><br></code></pre></td></tr></table></figure>
+
+<p>其中<code>\d&#123;1,3&#125;?</code>只匹配到一个字符”1”，而后面的<code>\d&#123;1,3&#125;</code>匹配了”234”</p>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><p>分组主要是用过<code>()</code>进行实现，比如<code>beyond&#123;3&#125;</code>，是匹配<code>d</code>字母3次。而<code>(beyond)&#123;3&#125;</code>是匹配<code>beyond</code>三次</p>
+<p>在<code>()</code>内使用<code>|</code>达到或的效果，如<code>(abc | xxx)</code>可以匹配<code>abc</code>或者<code>xxx</code></p>
+<p>反向引用，巧用<code>$</code>分组捕获</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;John Smith&quot;</span>;<br><br><span class="hljs-comment">// 交换名字和姓氏</span><br><span class="hljs-built_in">console</span>.log(str.replace(<span class="hljs-regexp">/(john) (smith)/i</span>, <span class="hljs-string">&#x27;$2, $1&#x27;</span>)) <span class="hljs-comment">// Smith, John</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="匹配方法"><a href="#匹配方法" class="headerlink" title="匹配方法"></a>匹配方法</h2><p>正则表达式常被用于某些方法，我们可以分成两类：</p>
+<ul>
+<li>字符串（str）方法：<code>match</code>、<code>matchAll</code>、<code>search</code>、<code>replace</code>、<code>split</code></li>
+<li>正则对象下（regexp）的方法：<code>test</code>、<code>exec</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">exec</td>
+<td align="left">一个在字符串中执行查找匹配的RegExp方法，它返回一个数组（未匹配到则返回 null）。</td>
+</tr>
+<tr>
+<td align="left">test</td>
+<td align="left">一个在字符串中测试是否匹配的RegExp方法，它返回 true 或 false。</td>
+</tr>
+<tr>
+<td align="left">match</td>
+<td align="left">一个在字符串中执行查找匹配的String方法，它返回一个数组，在未匹配到时会返回 null。</td>
+</tr>
+<tr>
+<td align="left">matchAll</td>
+<td align="left">一个在字符串中执行查找所有匹配的String方法，它返回一个迭代器（iterator）。</td>
+</tr>
+<tr>
+<td align="left">search</td>
+<td align="left">一个在字符串中测试匹配的String方法，它返回匹配到的位置索引，或者在失败时返回-1。</td>
+</tr>
+<tr>
+<td align="left">replace</td>
+<td align="left">一个在字符串中执行查找匹配的String方法，并且使用替换字符串替换掉匹配到的子字符串。</td>
+</tr>
+<tr>
+<td align="left">split</td>
+<td align="left">一个使用正则表达式或者一个固定字符串分隔一个字符串，并将分隔后的子字符串存储到数组中的 <code>String</code> 方法。</td>
+</tr>
+</tbody></table>
+<h3 id="str-match-regexp"><a href="#str-match-regexp" class="headerlink" title="str.match(regexp)"></a>str.match(regexp)</h3><p><code>str.match(regexp)</code> 方法在字符串 <code>str</code> 中找到匹配 <code>regexp</code> 的字符</p>
+<p>如果 <code>regexp</code> 不带有 <code>g</code> 标记，则它以数组的形式返回第一个匹配项，其中包含分组和属性 <code>index</code>（匹配项的位置）、<code>input</code>（输入字符串，等于 <code>str</code>）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;I love JavaScript&quot;</span>;<br><br><span class="hljs-keyword">let</span> result = str.match(<span class="hljs-regexp">/Java(Script)/</span>);<br><br><span class="hljs-built_in">console</span>.log( result[<span class="hljs-number">0</span>] );     <span class="hljs-comment">// JavaScript（完全匹配）</span><br><span class="hljs-built_in">console</span>.log( result[<span class="hljs-number">1</span>] );     <span class="hljs-comment">// Script（第一个分组）</span><br><span class="hljs-built_in">console</span>.log( result.length ); <span class="hljs-comment">// 2</span><br><br><span class="hljs-comment">// 其他信息：</span><br><span class="hljs-built_in">console</span>.log( result.index );  <span class="hljs-comment">// 7（匹配位置）</span><br><span class="hljs-built_in">console</span>.log( result.input );  <span class="hljs-comment">// I love JavaScript（源字符串）</span><br></code></pre></td></tr></table></figure>
+
+<p>如果 <code>regexp</code> 带有 <code>g</code> 标记，则它将所有匹配项的数组作为字符串返回，而不包含分组和其他详细信息</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;I love JavaScript&quot;</span>;<br><br><span class="hljs-keyword">let</span> result = str.match(<span class="hljs-regexp">/Java(Script)/g</span>);<br><br><span class="hljs-built_in">console</span>.log( result[<span class="hljs-number">0</span>] ); <span class="hljs-comment">// JavaScript</span><br><span class="hljs-built_in">console</span>.log( result.length ); <span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
+
+<p>如果没有匹配项，则无论是否带有标记 <code>g</code> ，都将返回 <code>null</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;I love JavaScript&quot;</span>;<br><br><span class="hljs-keyword">let</span> result = str.match(<span class="hljs-regexp">/HTML/</span>);<br><br><span class="hljs-built_in">console</span>.log(result); <span class="hljs-comment">// null</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="str-matchAll-regexp"><a href="#str-matchAll-regexp" class="headerlink" title="str.matchAll(regexp)"></a>str.matchAll(regexp)</h3><p>返回一个包含所有匹配正则表达式的结果及分组捕获组的迭代器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> regexp = <span class="hljs-regexp">/t(e)(st(\d?))/g</span>;<br><span class="hljs-keyword">const</span> str = <span class="hljs-string">&#x27;test1test2&#x27;</span>;<br><br><span class="hljs-keyword">const</span> array = [...str.matchAll(regexp)];<br><br><span class="hljs-built_in">console</span>.log(array[<span class="hljs-number">0</span>]);<br><span class="hljs-comment">// expected output: Array [&quot;test1&quot;, &quot;e&quot;, &quot;st1&quot;, &quot;1&quot;]</span><br><br><span class="hljs-built_in">console</span>.log(array[<span class="hljs-number">1</span>]);<br><span class="hljs-comment">// expected output: Array [&quot;test2&quot;, &quot;e&quot;, &quot;st2&quot;, &quot;2&quot;]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="str-search-regexp"><a href="#str-search-regexp" class="headerlink" title="str.search(regexp)"></a>str.search(regexp)</h3><p>返回第一个匹配项的位置，如果未找到，则返回 <code>-1</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;A drop of ink may make a million think&quot;</span>;<br><br><span class="hljs-built_in">console</span>.log( str.search( <span class="hljs-regexp">/ink/i</span> ) ); <span class="hljs-comment">// 10（第一个匹配位置）</span><br></code></pre></td></tr></table></figure>
+
+<p>这里需要注意的是，<code>search</code> 仅查找第一个匹配项</p>
+<h3 id="str-replace-regexp"><a href="#str-replace-regexp" class="headerlink" title="str.replace(regexp)"></a>str.replace(regexp)</h3><p>替换与正则表达式匹配的子串，并返回替换后的字符串。在不设置全局匹配<code>g</code>的时候，只替换第一个匹配成功的字符串片段</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg1=<span class="hljs-regexp">/javascript/i</span>;<br><span class="hljs-keyword">const</span> reg2=<span class="hljs-regexp">/javascript/ig</span>;<br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;hello Javascript Javascript Javascript&#x27;</span>.replace(reg1,<span class="hljs-string">&#x27;js&#x27;</span>));<br><span class="hljs-comment">//hello js Javascript Javascript</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;hello Javascript Javascript Javascript&#x27;</span>.replace(reg2,<span class="hljs-string">&#x27;js&#x27;</span>));<br><span class="hljs-comment">//hello js js js</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="str-split-regexp"><a href="#str-split-regexp" class="headerlink" title="str.split(regexp)"></a>str.split(regexp)</h3><p>使用正则表达式（或子字符串）作为分隔符来分割字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;12, 34, 56&#x27;</span>.split(<span class="hljs-regexp">/,\s*/</span>)) <span class="hljs-comment">// 数组 [&#x27;12&#x27;, &#x27;34&#x27;, &#x27;56&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="regexp-exec-str"><a href="#regexp-exec-str" class="headerlink" title="regexp.exec(str)"></a>regexp.exec(str)</h3><p><code>regexp.exec(str)</code> 方法返回字符串 <code>str</code> 中的 <code>regexp</code> 匹配项，与以前的方法不同，它是在正则表达式而不是字符串上调用的</p>
+<p>根据正则表达式是否带有标志 <code>g</code>，它的行为有所不同</p>
+<p>如果没有 <code>g</code>，那么 <code>regexp.exec(str)</code> 返回的第一个匹配与 <code>str.match(regexp)</code> 完全相同</p>
+<p>如果有标记 <code>g</code>，调用 <code>regexp.exec(str)</code> 会返回第一个匹配项，并将紧随其后的位置保存在属性<code>regexp.lastIndex</code> 中。 下一次同样的调用会从位置 <code>regexp.lastIndex</code> 开始搜索，返回下一个匹配项，并将其后的位置保存在 <code>regexp.lastIndex</code> 中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str = <span class="hljs-string">&#x27;More about JavaScript at https://javascript.info&#x27;</span>;<br><span class="hljs-keyword">let</span> regexp = <span class="hljs-regexp">/javascript/ig</span>;<br><br><span class="hljs-keyword">let</span> result;<br><br><span class="hljs-keyword">while</span> (result = regexp.exec(str)) &#123;<br>  <span class="hljs-built_in">console</span>.log( <span class="hljs-string">`Found <span class="hljs-subst">$&#123;result[<span class="hljs-number">0</span>]&#125;</span> at position <span class="hljs-subst">$&#123;result.index&#125;</span>`</span> );<br>  <span class="hljs-comment">// Found JavaScript at position 11</span><br>  <span class="hljs-comment">// Found javascript at position 33</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="regexp-test-str"><a href="#regexp-test-str" class="headerlink" title="regexp.test(str)"></a>regexp.test(str)</h3><p>查找匹配项，然后返回 <code>true/false</code> 表示是否存在</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> str = <span class="hljs-string">&quot;I love JavaScript&quot;</span>;<br><br><span class="hljs-comment">// 这两个测试相同</span><br><span class="hljs-built_in">console</span>.log( <span class="hljs-regexp">/love/i</span>.test(str) ); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>通过上面的学习，我们对正则表达式有了一定的了解</p>
+<p>下面再来看看正则表达式一些案例场景：</p>
+<p>验证QQ合法性（5~15位、全是数字、不以0开头）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> reg = <span class="hljs-regexp">/^[1-9][0-9]&#123;4,14&#125;$/</span><br><span class="hljs-keyword">const</span> isvalid = patrn.exec(s)<br></code></pre></td></tr></table></figure>
+
+<p>校验用户账号合法性（只能输入5-20个以字母开头、可带数字、“_”、“.”的字串）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> patrn=<span class="hljs-regexp">/^[a-zA-Z]&#123;1&#125;([a-zA-Z0-9]|[._])&#123;4,19&#125;$/</span>;<br><span class="hljs-keyword">const</span> isvalid = patrn.exec(s)<br></code></pre></td></tr></table></figure>
+
+<p>将<code>url</code>参数解析为对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> protocol = <span class="hljs-string">&#x27;(?&lt;protocol&gt;https?:)&#x27;</span>;<br><span class="hljs-keyword">const</span> host = <span class="hljs-string">&#x27;(?&lt;host&gt;(?&lt;hostname&gt;[^/#?:]+)(?::(?&lt;port&gt;\\d+))?)&#x27;</span>;<br><span class="hljs-keyword">const</span> path = <span class="hljs-string">&#x27;(?&lt;pathname&gt;(?:\\/[^/#?]+)*\\/?)&#x27;</span>;<br><span class="hljs-keyword">const</span> search = <span class="hljs-string">&#x27;(?&lt;search&gt;(?:\\?[^#]*)?)&#x27;</span>;<br><span class="hljs-keyword">const</span> hash = <span class="hljs-string">&#x27;(?&lt;hash&gt;(?:#.*)?)&#x27;</span>;<br><span class="hljs-keyword">const</span> reg = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">`^<span class="hljs-subst">$&#123;protocol&#125;</span>\/\/<span class="hljs-subst">$&#123;host&#125;</span><span class="hljs-subst">$&#123;path&#125;</span><span class="hljs-subst">$&#123;search&#125;</span><span class="hljs-subst">$&#123;hash&#125;</span>$`</span>);<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">execURL</span>(<span class="hljs-params">url</span>)</span>&#123;<br>    <span class="hljs-keyword">const</span> result = reg.exec(url);<br>    <span class="hljs-keyword">if</span>(result)&#123;<br>        result.groups.port = result.groups.port || <span class="hljs-string">&#x27;&#x27;</span>;<br>        <span class="hljs-keyword">return</span> result.groups;<br>    &#125;<br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-attr">protocol</span>:<span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-attr">host</span>:<span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-attr">hostname</span>:<span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-attr">port</span>:<span class="hljs-string">&#x27;&#x27;</span>,<br>        <span class="hljs-attr">pathname</span>:<span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-attr">search</span>:<span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-attr">hash</span>:<span class="hljs-string">&#x27;&#x27;</span>,<br>    &#125;;<br>&#125;<br><br><span class="hljs-built_in">console</span>.log(execURL(<span class="hljs-string">&#x27;https://localhost:8080/?a=b#xxxx&#x27;</span>));<br>protocol: <span class="hljs-string">&quot;https:&quot;</span><br><span class="hljs-attr">host</span>: <span class="hljs-string">&quot;localhost:8080&quot;</span><br><span class="hljs-attr">hostname</span>: <span class="hljs-string">&quot;localhost&quot;</span><br><span class="hljs-attr">port</span>: <span class="hljs-string">&quot;8080&quot;</span><br><span class="hljs-attr">pathname</span>: <span class="hljs-string">&quot;/&quot;</span><br><span class="hljs-attr">search</span>: <span class="hljs-string">&quot;?a=b&quot;</span><br><span class="hljs-attr">hash</span>: <span class="hljs-string">&quot;#xxxx&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>再将上面的<code>search</code>和<code>hash</code>进行解析</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">execUrlParams</span>(<span class="hljs-params">str</span>)</span>&#123;<br>    str = str.replace(<span class="hljs-regexp">/^[#?&amp;]/</span>,<span class="hljs-string">&#x27;&#x27;</span>);<br>    <span class="hljs-keyword">const</span> result = &#123;&#125;;<br>    <span class="hljs-keyword">if</span>(!str)&#123; <span class="hljs-comment">//如果正则可能配到空字符串，极有可能造成死循环，判断很重要</span><br>        <span class="hljs-keyword">return</span> result; <br>    &#125;<br>    <span class="hljs-keyword">const</span> reg = <span class="hljs-regexp">/(?:^|&amp;)([^&amp;=]*)=?([^&amp;]*?)(?=&amp;|$)/y</span><br>    <span class="hljs-keyword">let</span> exec = reg.exec(str);<br>    <span class="hljs-keyword">while</span>(exec)&#123;<br>        result[exec[<span class="hljs-number">1</span>]] = exec[<span class="hljs-number">2</span>];<br>        exec = reg.exec(str);<br>    &#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br><span class="hljs-built_in">console</span>.log(execUrlParams(<span class="hljs-string">&#x27;#&#x27;</span>));<span class="hljs-comment">// &#123;&#125;</span><br><span class="hljs-built_in">console</span>.log(execUrlParams(<span class="hljs-string">&#x27;##&#x27;</span>));<span class="hljs-comment">//&#123;&#x27;#&#x27;:&#x27;&#x27;&#125;</span><br><span class="hljs-built_in">console</span>.log(execUrlParams(<span class="hljs-string">&#x27;?q=3606&amp;src=srp&#x27;</span>)); <span class="hljs-comment">//&#123;q: &quot;3606&quot;, src: &quot;srp&quot;&#125;</span><br><span class="hljs-built_in">console</span>.log(execUrlParams(<span class="hljs-string">&#x27;test=a=b=c&amp;&amp;==&amp;a=&#x27;</span>));<span class="hljs-comment">//&#123;test: &quot;a=b=c&quot;, &quot;&quot;: &quot;=&quot;, a: &quot;&quot;&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/dylan/2021/12/27/animation/">
+                        <span class="hidden-mobile">CSS动画</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","appKey":"odfvj4BfvPjWMc4l7nuHODEK","path":"window.location.pathname","placeholder":"Say something","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/dylan/js/events.js" ></script>
+<script  src="/dylan/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/dylan/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/dylan/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/dylan/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/dylan/js/boot.js" ></script>
+
+
+</body>
+</html>
