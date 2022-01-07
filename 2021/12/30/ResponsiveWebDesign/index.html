@@ -13,24 +13,23 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="em/px/rem/vh/vw 这些单位有什么区别？">
+  <meta name="description" content="什么是响应式设计，如何实现">
   <meta name="author" content="Dlyan">
   <meta name="keywords" content="blog">
-  <meta name="description" content="em&#x2F;px&#x2F;rem&#x2F;vh&#x2F;vw 这些单位有什么区别？">
+  <meta name="description" content="什么是响应式设计，如何实现">
 <meta property="og:type" content="article">
-<meta property="og:title" content="像素单位">
-<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/21/px/index.html">
+<meta property="og:title" content="响应式设计">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2021/12/30/ResponsiveWebDesign/index.html">
 <meta property="og:site_name" content="Dylan&#39;s blog">
-<meta property="og:description" content="em&#x2F;px&#x2F;rem&#x2F;vh&#x2F;vw 这些单位有什么区别？">
+<meta property="og:description" content="什么是响应式设计，如何实现">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-21T13:22:30.000Z">
-<meta property="article:modified_time" content="2021-12-30T12:23:51.214Z">
+<meta property="article:published_time" content="2021-12-30T12:22:12.000Z">
+<meta property="article:modified_time" content="2022-01-07T14:53:45.626Z">
 <meta property="article:author" content="Dlyan">
 <meta property="article:tag" content="综合">
-<meta property="article:tag" content="CSS">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>像素单位 - Dylan&#39;s blog</title>
+  <title>响应式设计 - Dylan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -183,12 +182,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/dylan/imgs/px/big.png') no-repeat center center;
+         style="background: url('/dylan/imgs/ResponsiveWebDesign/big.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="像素单位">
+            <span class="h2" id="subtitle" title="响应式设计">
               
             </span>
 
@@ -203,8 +202,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-12-21 21:22" pubdate>
-        2021年12月21日 晚上
+      <time datetime="2021-12-30 20:22" pubdate>
+        2021年12月30日 晚上
       </time>
     </span>
   
@@ -214,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      2.6k 字
     </span>
   
 
@@ -223,7 +222,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5 分钟
+      8 分钟
     </span>
   
 
@@ -260,73 +259,85 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">像素单位</h1>
+            <h1 style="display: none">响应式设计</h1>
             
             <div class="markdown-body">
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>传统的项目开发中，我们只会用到<code>px</code>、<code>%</code>、<code>em</code>这几个单位，它可以适用于大部分的项目开发，且拥有比较良好的兼容性</p>
-<p>从<code>CSS3</code>开始，浏览器对计量单位的支持又提升到了另外一个境界，新增了<code>rem</code>、<code>vh</code>、<code>vw</code>、<code>vm</code>等一些新的计量单位</p>
-<p>利用这些新的单位开发出比较良好的响应式页面，适应多种不同分辨率的终端，包括移动设备等</p>
-<h2 id="单位"><a href="#单位" class="headerlink" title="单位"></a>单位</h2><p>在<code>css</code>单位中，可以分为长度单位、绝对单位，如下表所指示</p>
-<table>
-<thead>
-<tr>
-<th>CSS单位</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>相对长度单位</td>
-<td>em、ex、ch、rem、vw、vh、vmin、vmax、%</td>
-</tr>
-<tr>
-<td>绝对长度单位</td>
-<td>cm、mm、in、px、pt、pc</td>
-</tr>
-</tbody></table>
-<p>这里我们主要讲述px、em、rem、vh、vw</p>
-<h3 id="px"><a href="#px" class="headerlink" title="px"></a>px</h3><p>px，表示像素，所谓像素就是呈现在我们显示器上的一个个小点，每个像素点都是大小等同的，所以像素为计量单位被分在了绝对长度单位中</p>
-<p>有些人会把<code>px</code>认为是相对长度，原因在于在移动端中存在设备像素比，<code>px</code>实际显示的大小是不确定</p>
-<p>这里之所以认为<code>px</code>为绝对单位，在于<code>px</code>的大小和元素的其他属性无关</p>
-<h3 id="em"><a href="#em" class="headerlink" title="em"></a>em</h3><p>em是相对长度单位。相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸（<code>1em = 16px</code>）</p>
-<p>为了简化 <code>font-size</code> 的换算，我们需要在<code>css</code>中的 <code>body</code> 选择器中声明<code>font-size</code>= <code>62.5%</code>，这就使 em 值变为 <code>16px*62.5% = 10px</code></p>
-<p>这样 <code>12px = 1.2em</code>, <code>10px = 1em</code>, 也就是说只需要将你的原来的<code> px</code> 数值除以 10，然后换上 <code>em </code>作为单位就行了</p>
-<p>特点：</p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>响应式网站设计（Responsive Web design）是一种网络页面设计布局，页面的设计与开发应当根据用户行为以及设备环境(系统平台、屏幕尺寸、屏幕定向等)进行相应的响应和调整</p>
+<p>描述响应式界面最著名的一句话就是“Content is like water”</p>
+<p>大白话便是“如果将屏幕看作容器，那么内容就像水一样”</p>
+<p>响应式网站常见特点：</p>
 <ul>
-<li>em 的值并不是固定的</li>
-<li>em 会继承父级元素的字体大小</li>
-<li>em 是相对长度单位。相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸</li>
-<li>任意浏览器的默认字体高都是 16px</li>
+<li>同时适配PC + 平板 + 手机等</li>
+<li>标签导航在接近手持终端设备时改变为经典的抽屉式导航</li>
+<li>网站的布局会根据视口来调整模块的大小和位置</li>
 </ul>
-<p>举个例子</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;big&quot;</span>&gt;</span><br>    我是14px=1.4rem<br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;small&quot;</span>&gt;</span>我是12px=1.2rem<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"></span><br><span class="css"><span class="hljs-selector-tag">html</span> &#123;<span class="hljs-attribute">font-size</span>: <span class="hljs-number">10px</span>;  &#125; <span class="hljs-comment">/*  公式16px*62.5%=10px  */</span> </span><br><span class="css"><span class="hljs-selector-class">.big</span>&#123;<span class="hljs-attribute">font-size</span>: <span class="hljs-number">1.4rem</span>&#125;</span><br><span class="css"><span class="hljs-selector-class">.small</span>&#123;<span class="hljs-attribute">font-size</span>: <span class="hljs-number">1.2rem</span>&#125;</span><br><span class="css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>响应式设计的基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理，为了处理移动端，页面头部必须有<code>meta</code>声明<code>viewport</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no”&gt;</span></span><br></code></pre></td></tr></table></figure>
 
-<p>这时候<code>.big</code>元素的<code>font-size</code>为14px，而<code>.small</code>元素的<code>font-size</code>为12px</p>
-<h3 id="rem"><a href="#rem" class="headerlink" title="rem"></a>rem</h3><p>rem，相对单位，相对的只是HTML根元素<code>font-size</code>的值</p>
-<p>同理，如果想要简化<code>font-size</code>的转化，我们可以在根元素<code>html</code>中加入<code>font-size: 62.5%</code></p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">html</span> &#123;font-size: <span class="hljs-number">62</span>.<span class="hljs-number">5</span>%;  &#125; /*  公式<span class="hljs-number">16</span>px*<span class="hljs-number">62</span>.<span class="hljs-number">5</span>%=<span class="hljs-number">10</span>px  */ <br></code></pre></td></tr></table></figure>
+<p>属性对应如下：</p>
+<ul>
+<li>width=device-width: 是自适应手机屏幕的尺寸宽度</li>
+<li>maximum-scale:是缩放比例的最大值</li>
+<li>inital-scale:是缩放的初始化</li>
+<li>user-scalable:是用户的可以缩放的操作</li>
+</ul>
+<p>实现响应式布局的方式有如下：</p>
+<ul>
+<li>媒体查询</li>
+<li>百分比</li>
+<li>vw/vh</li>
+<li>rem</li>
+</ul>
+<h3 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h3><p><code>CSS3 </code>中的增加了更多的媒体查询，就像<code>if</code>条件表达式一样，我们可以设置不同类型的媒体条件，并根据对应的条件，给相应符合条件的媒体调用相对应的样式表</p>
+<p>使用<code>@Media</code>查询，可以针对不同的媒体类型定义不同的样式，如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">1920px</span>) &#123; ... &#125;<br></code></pre></td></tr></table></figure>
 
-<p>这样页面中1rem=10px、1.2rem=12px、1.4rem=14px、1.6rem=16px;使得视觉、使用、书写都得到了极大的帮助</p>
-<p>特点：</p>
+<p>当视口在375px - 600px之间，设置特定字体大小18px</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> screen (<span class="hljs-attribute">min-width</span>: <span class="hljs-number">375px</span>) <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">600px</span>) &#123;<br>  <span class="hljs-selector-tag">body</span> &#123;<br>    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">18px</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通过媒体查询，可以通过给不同分辨率的设备编写不同的样式来实现响应式的布局，比如我们为不同分辨率的屏幕，设置不同的背景图片</p>
+<p>比如给小屏幕手机设置@2x图，为大屏幕手机设置@3x图，通过媒体查询就能很方便的实现</p>
+<h3 id="百分比"><a href="#百分比" class="headerlink" title="百分比"></a>百分比</h3><p>通过百分比单位 “ % “ 来实现响应式的效果</p>
+<p>比如当浏览器的宽度或者高度发生变化时，通过百分比单位，可以使得浏览器中的组件的宽和高随着浏览器的变化而变化，从而实现响应式的效果</p>
+<p><code>height</code>、<code>width</code>属性的百分比依托于父标签的宽高，但是其他盒子属性则不完全依赖父元素：</p>
 <ul>
-<li>rem单位可谓集相对大小和绝对大小的优点于一身</li>
-<li>和em不同的是rem总是相对于根元素，而不像em一样使用级联的方式来计算尺寸</li>
+<li>子元素的top/left和bottom/right如果设置百分比，则相对于直接非static定位(默认定位)的父元素的高度/宽度</li>
+<li>子元素的padding如果设置百分比，不论是垂直方向或者是水平方向，都相对于直接父亲元素的width，而与父元素的height无关。</li>
+<li>子元素的margin如果设置成百分比，不论是垂直方向还是水平方向，都相对于直接父元素的width</li>
+<li>border-radius不一样，如果设置border-radius为百分比，则是相对于自身的宽度</li>
 </ul>
-<h3 id="vh、vw"><a href="#vh、vw" class="headerlink" title="vh、vw"></a>vh、vw</h3><p>vw ，就是根据窗口的宽度，分成100等份，100vw就表示满宽，50vw就表示一半宽。（vw 始终是针对窗口的宽），同理，<code>vh</code>则为窗口的高度</p>
-<p>这里的窗口分成几种情况：</p>
+<p>可以看到每个属性都使用百分比，会照成布局的复杂度，所以不建议使用百分比来实现响应式</p>
+<h3 id="vw-vh"><a href="#vw-vh" class="headerlink" title="vw/vh"></a>vw/vh</h3><p><code>vw</code>表示相对于视图窗口的宽度，<code>vh</code>表示相对于视图窗口高度。 任意层级元素，在使用<code>vw</code>单位的情况下，<code>1vw</code>都等于视图宽度的百分之一</p>
+<p>与百分比布局很相似，在以前文章提过与<code>%</code>的区别，这里就不再展开述说</p>
+<h3 id="rem"><a href="#rem" class="headerlink" title="rem"></a>rem</h3><p>在以前也讲到，<code>rem</code>是相对于根元素<code>html</code>的<code>font-size</code>属性，默认情况下浏览器字体大小为<code>16px</code>，此时<code>1rem = 16px</code></p>
+<p>可以利用前面提到的媒体查询，针对不同设备分辨率改变<code>font-size</code>的值，如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">414px</span>) &#123;<br>  <span class="hljs-selector-tag">html</span> &#123;<br>    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">18px</span><br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">375px</span>) &#123;<br>  <span class="hljs-selector-tag">html</span> &#123;<br>    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span><br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">@media</span> screen <span class="hljs-keyword">and</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">320px</span>) &#123;<br>  <span class="hljs-selector-tag">html</span> &#123;<br>    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">12px</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>为了更准确监听设备可视窗口变化，我们可以在<code>css</code>之前插入<code>script</code>标签，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//动态为根元素设置字体大小</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-comment">// 获取屏幕宽度</span><br>    <span class="hljs-keyword">var</span> width = <span class="hljs-built_in">document</span>.documentElement.clientWidth<br>    <span class="hljs-comment">// 设置根元素字体大小。此时为宽的10等分</span><br>    <span class="hljs-built_in">document</span>.documentElement.style.fontSize = width / <span class="hljs-number">10</span> + <span class="hljs-string">&#x27;px&#x27;</span><br>&#125;<br><br><span class="hljs-comment">//首次加载应用，设置一次</span><br>init()<br><span class="hljs-comment">// 监听手机旋转的事件的时机，重新设置</span><br><span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&#x27;orientationchange&#x27;</span>, init)<br><span class="hljs-comment">// 监听手机窗口变化，重新设置</span><br><span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&#x27;resize&#x27;</span>, init)<br></code></pre></td></tr></table></figure>
+
+<p>无论设备可视窗口如何变化，始终设置<code>rem</code>为<code>width</code>的1/10，实现了百分比布局</p>
+<p>除此之外，我们还可以利用主流<code>UI</code>框架，如：<code>element ui</code>、<code>antd</code>提供的栅格布局实现响应式</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>响应式设计实现通常会从以下几方面思考：</p>
 <ul>
-<li>在桌面端，指的是浏览器的可视区域</li>
-<li>移动端指的就是布局视口</li>
+<li>弹性盒子（包括图片、表格、视频）和媒体查询等技术</li>
+<li>使用百分比布局创建流式布局的弹性UI，同时使用媒体查询限制元素的尺寸和内容变更范围</li>
+<li>使用相对单位使得内容自适应调节</li>
+<li>选择断点，针对不同断点实现不同布局和内容展示</li>
 </ul>
-<p>像<code>vw</code>、<code>vh</code>，比较容易混淆的一个单位是<code>%</code>，不过百分比宽泛的讲是相对于父元素：</p>
-<p>对于普通定位元素就是我们理解的父元素</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>响应式布局优点可以看到：</p>
 <ul>
-<li>对于position: absolute;的元素是相对于已定位的父元素</li>
-<li>对于position: fixed;的元素是相对于 ViewPort（可视窗口）</li>
+<li>面对不同分辨率设备灵活性强</li>
+<li>能够快捷解决多设备显示适应问题</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>px</strong>：绝对单位，页面按精确像素展示</p>
-<p><strong>em</strong>：相对单位，基准点为父节点字体的大小，如果自身定义了<code>font-size</code>按自身来计算，整个页面内<code>1em</code>不是一个固定的值</p>
-<p><strong>rem</strong>：相对单位，可理解为<code>root em</code>, 相对根节点<code>html</code>的字体大小来计算</p>
-<p><strong>vh、vw</strong>：主要用于页面视口大小布局，在页面布局上更加方便简单</p>
+<p>缺点：</p>
+<ul>
+<li>仅适用布局、信息、框架并不复杂的部门类型网站</li>
+<li>兼容各种设备工作量大，效率低下</li>
+<li>代码累赘，会出现隐藏无用的元素，加载时间加长</li>
+<li>其实这是一种折中性质的设计解决方案，多方面因素影响而达不到最佳效果</li>
+<li>一定程度上改变了网站原有的布局结构，会出现用户混淆的情况</li>
+</ul>
 
             </div>
             <hr>
@@ -346,8 +357,6 @@
                     
                       <a class="hover-with-bg" href="/dylan/tags/%E7%BB%BC%E5%90%88/">综合</a>
                     
-                      <a class="hover-with-bg" href="/dylan/tags/CSS/">CSS</a>
-                    
                   </div>
                 
               </div>
@@ -363,18 +372,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/dylan/2021/12/24/triangle/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使用CSS画三角形</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/dylan/2021/12/20/box/">
-                        <span class="hidden-mobile">盒模型</span>
+                      <a href="/dylan/2021/12/30/regexp/">
+                        <span class="hidden-mobile">什么是正则表达式</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
