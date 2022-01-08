@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>js隐式转换</title>
+    <link href="/dylan/2022/01/01/implicit/"/>
+    <url>/dylan/2022/01/01/implicit/</url>
+    
+    <content type="html"><![CDATA[<h2 id="四则运算"><a href="#四则运算" class="headerlink" title="四则运算"></a>四则运算</h2><ul><li>加法<code>运算符+</code>是双目运算符，只要其中一个是String类型，表达式的值便是一个String。</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span> + <span class="hljs-string">&#x27;3&#x27;</span><span class="hljs-comment">// &#x27;23&#x27;</span><br></code></pre></td></tr></table></figure><ul><li>对于其他的四则运算，只有其中一个是Number类型，表达式的值便是一个Number。</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">3</span> - <span class="hljs-string">&#x27;2&#x27;</span><span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure><ul><li>对于非法字符的情况通常会返回NaN：</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-string">&#x27;1&#x27;</span> * <span class="hljs-string">&#x27;a&#x27;</span>     <span class="hljs-comment">// =&gt; NaN，这是因为parseInt(a)值为NaN，1 * NaN 还是 NaN</span><br></code></pre></td></tr></table></figure><h2 id="判断语句"><a href="#判断语句" class="headerlink" title="判断语句"></a>判断语句</h2><ul><li>判断语句中的判断条件需要是Boolean类型，所以条件表达式会被隐式转换为Boolean。 其转换规则同Boolean的构造函数。比如：</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> obj = &#123;&#125;;<br><span class="hljs-keyword">if</span>(obj)&#123;<br>dosomething...<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="JavaScript-原始类型转换表"><a href="#JavaScript-原始类型转换表" class="headerlink" title="JavaScript 原始类型转换表"></a>JavaScript 原始类型转换表</h2><table><thead><tr><th>原始值</th><th>转化为数值类型</th><th>转化为字符串类型</th><th>转化为 Boolean 类型</th></tr></thead><tbody><tr><td>false</td><td>0</td><td>“false”</td><td>false</td></tr><tr><td>true</td><td>1</td><td>“true”</td><td>true</td></tr><tr><td>0</td><td>0</td><td>“0”</td><td>false</td></tr><tr><td>1</td><td>1</td><td>“1”</td><td>true</td></tr><tr><td>“0”</td><td>0</td><td>“0”</td><td>true</td></tr><tr><td>“1”</td><td>1</td><td>“1”</td><td>true</td></tr><tr><td>NaN</td><td>NaN</td><td>“NaN”</td><td>false</td></tr><tr><td>Infinity</td><td>Infinity</td><td>“Infinity”</td><td>true</td></tr><tr><td>-Infinity</td><td>-Infinity</td><td>“-Infinity”</td><td>true</td></tr><tr><td>“”</td><td>0</td><td>“”</td><td>false</td></tr><tr><td>“20”</td><td>20</td><td>“20”</td><td>true</td></tr><tr><td>“twenty”</td><td>NaN</td><td>“twenty”</td><td>true</td></tr><tr><td>[ ]</td><td>0</td><td>“”</td><td>true</td></tr><tr><td>[20]</td><td>20</td><td>“20”</td><td>true</td></tr><tr><td>[10,20]</td><td>NaN</td><td>“10,20”</td><td>true</td></tr><tr><td>[“twenty”]</td><td>NaN</td><td>“twenty”</td><td>true</td></tr><tr><td>[“ten”,”twenty”]</td><td>NaN</td><td>“ten,twenty”</td><td>true</td></tr><tr><td>function(){}</td><td>NaN</td><td>“function(){}”</td><td>true</td></tr><tr><td>{ }</td><td>NaN</td><td>“[object Object]”</td><td>true</td></tr><tr><td>null</td><td>0</td><td>“null”</td><td>false</td></tr><tr><td>undefined</td><td>NaN</td><td>“undefined”</td><td>false</td></tr></tbody></table>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JavaScript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>响应式设计</title>
     <link href="/dylan/2021/12/30/ResponsiveWebDesign/"/>
     <url>/dylan/2021/12/30/ResponsiveWebDesign/</url>
@@ -147,9 +172,9 @@
     
     <tags>
       
-      <tag>综合</tag>
-      
       <tag>CSS</tag>
+      
+      <tag>综合</tag>
       
     </tags>
     
