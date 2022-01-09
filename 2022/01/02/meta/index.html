@@ -13,23 +13,23 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="js隐式转换规则">
+  <meta name="description" content="常见的 meta 元素有哪些">
   <meta name="author" content="Dlyan">
   <meta name="keywords" content="blog">
-  <meta name="description" content="js隐式转换规则">
+  <meta name="description" content="常见的 meta 元素有哪些">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js隐式转换">
-<meta property="og:url" content="https://sansui-d.github.io/dylan/2022/01/01/implicit/index.html">
+<meta property="og:title" content="常用的 meta 元素">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2022/01/02/meta/index.html">
 <meta property="og:site_name" content="Dylan&#39;s blog">
-<meta property="og:description" content="js隐式转换规则">
+<meta property="og:description" content="常见的 meta 元素有哪些">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-01T11:30:15.000Z">
-<meta property="article:modified_time" content="2022-01-08T14:30:30.789Z">
+<meta property="article:published_time" content="2022-01-02T12:24:14.000Z">
+<meta property="article:modified_time" content="2022-01-09T13:50:10.953Z">
 <meta property="article:author" content="Dlyan">
-<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="HTML">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>js隐式转换 - Dylan&#39;s blog</title>
+  <title>常用的 meta 元素 - Dylan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,12 +182,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/dylan/imgs/implicit/big.png') no-repeat center center;
+         style="background: url('/dylan/imgs/meta/big.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="js隐式转换">
+            <span class="h2" id="subtitle" title="常用的 meta 元素">
               
             </span>
 
@@ -202,8 +202,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-01 19:30" pubdate>
-        2022年1月1日 晚上
+      <time datetime="2022-01-02 20:24" pubdate>
+        2022年1月2日 晚上
       </time>
     </span>
   
@@ -213,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      821 字
+      2k 字
     </span>
   
 
@@ -222,7 +222,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3 分钟
+      6 分钟
     </span>
   
 
@@ -259,165 +259,75 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">js隐式转换</h1>
+            <h1 style="display: none">常用的 meta 元素</h1>
             
             <div class="markdown-body">
-              <h2 id="四则运算"><a href="#四则运算" class="headerlink" title="四则运算"></a>四则运算</h2><ul>
-<li>加法<code>运算符+</code>是双目运算符，只要其中一个是String类型，表达式的值便是一个String。</li>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>&lt;meta&gt;</code> 元素标签是提供有关HTML文档的元数据，元数据不会显示在页面上，但是能够被机器识别。</p>
+<p>总而言之, meta标签是用来让机器识别的，同时它对SEO起着重要的作用。</p>
+<h2 id="charset"><a href="#charset" class="headerlink" title="charset"></a>charset</h2><p>指定了html文档的编码格式，常用的是utf-8(Unicode的字符编码)，还有ISO-8859-1(拉丁字母的字符编码)。当然还有其他的，但是一般不常用也就不介绍了</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="name-amp-content"><a href="#name-amp-content" class="headerlink" title="name &amp; content"></a>name &amp; content</h2><p>指定元数据的名称(这部分对SEO非常有用)</p>
+<ul>
+<li>author——定义了页面的作者</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span> + <span class="hljs-string">&#x27;3&#x27;</span><span class="hljs-comment">// &#x27;23&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;author&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;Tony&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>对于其他的四则运算，只有其中一个是Number类型，表达式的值便是一个Number。</li>
+<li>keywords——为搜索引擎提供关键字</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">3</span> - <span class="hljs-string">&#x27;2&#x27;</span><span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;keywords&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;HTML, CSS, JavaScript&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>对于非法字符的情况通常会返回NaN：</li>
+<li>description——对网页整体的描述</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-string">&#x27;1&#x27;</span> * <span class="hljs-string">&#x27;a&#x27;</span>     <span class="hljs-comment">// =&gt; NaN，这是因为parseInt(a)值为NaN，1 * NaN 还是 NaN</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;description&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;My tutorials on HTML, CSS and JavaScript&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="判断语句"><a href="#判断语句" class="headerlink" title="判断语句"></a>判断语句</h2><ul>
-<li>判断语句中的判断条件需要是Boolean类型，所以条件表达式会被隐式转换为Boolean。 其转换规则同Boolean的构造函数。比如：</li>
+<ul>
+<li>viewport——对页面视图相关进行定义</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> obj = &#123;&#125;;<br><span class="hljs-keyword">if</span>(obj)&#123;<br>	dosomething...<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">width</span>=device-width——将页面宽度设置为跟随屏幕宽度变化而变化<br><span class="hljs-attribute">initial</span>-scale=<span class="hljs-number">1</span>.<span class="hljs-number">0</span>——设置浏览器首次加载页面时的初始缩放比例(<span class="hljs-number">0</span>.<span class="hljs-number">0</span>-<span class="hljs-number">10</span>.<span class="hljs-number">0</span>正数)<br><span class="hljs-attribute">maximum</span>-scale=<span class="hljs-number">1</span>.<span class="hljs-number">0</span>——允许用户缩放的最大比例(<span class="hljs-number">0</span>.<span class="hljs-number">0</span>-<span class="hljs-number">10</span>.<span class="hljs-number">0</span>正数)，必须大于等于minimum-scale<br><span class="hljs-attribute">minimum</span>-scale=<span class="hljs-number">1</span>.<span class="hljs-number">0</span>——允许用户缩放的最小比例(<span class="hljs-number">0</span>.<span class="hljs-number">0</span>-<span class="hljs-number">10</span>.<span class="hljs-number">0</span>正数)，必须小于等于maximum-scale<br><span class="hljs-attribute">user</span>-scalable=no——是否允许用户手动缩放(yes或者no)<br></code></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, minmum-scale=1.0&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="JavaScript-原始类型转换表"><a href="#JavaScript-原始类型转换表" class="headerlink" title="JavaScript 原始类型转换表"></a>JavaScript 原始类型转换表</h2><table>
-<thead>
-<tr>
-<th>原始值</th>
-<th>转化为数值类型</th>
-<th>转化为字符串类型</th>
-<th>转化为 Boolean 类型</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>false</td>
-<td>0</td>
-<td>“false”</td>
-<td>false</td>
-</tr>
-<tr>
-<td>true</td>
-<td>1</td>
-<td>“true”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>“0”</td>
-<td>false</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>“1”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>“0”</td>
-<td>0</td>
-<td>“0”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>“1”</td>
-<td>1</td>
-<td>“1”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>NaN</td>
-<td>NaN</td>
-<td>“NaN”</td>
-<td>false</td>
-</tr>
-<tr>
-<td>Infinity</td>
-<td>Infinity</td>
-<td>“Infinity”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>-Infinity</td>
-<td>-Infinity</td>
-<td>“-Infinity”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>“”</td>
-<td>0</td>
-<td>“”</td>
-<td>false</td>
-</tr>
-<tr>
-<td>“20”</td>
-<td>20</td>
-<td>“20”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>“twenty”</td>
-<td>NaN</td>
-<td>“twenty”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>[ ]</td>
-<td>0</td>
-<td>“”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>[20]</td>
-<td>20</td>
-<td>“20”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>[10,20]</td>
-<td>NaN</td>
-<td>“10,20”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>[“twenty”]</td>
-<td>NaN</td>
-<td>“twenty”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>[“ten”,”twenty”]</td>
-<td>NaN</td>
-<td>“ten,twenty”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>function(){}</td>
-<td>NaN</td>
-<td>“function(){}”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>{ }</td>
-<td>NaN</td>
-<td>“[object Object]”</td>
-<td>true</td>
-</tr>
-<tr>
-<td>null</td>
-<td>0</td>
-<td>“null”</td>
-<td>false</td>
-</tr>
-<tr>
-<td>undefined</td>
-<td>NaN</td>
-<td>“undefined”</td>
-<td>false</td>
-</tr>
-</tbody></table>
+<ul>
+<li>generator——包含生成页面软件的标识符</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;generator&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;Hexo 3.8.0&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>theme-color——定义主题颜色</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;theme-color&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;#222&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>http-equiv &amp; content</li>
+<li>refresh——每30s刷新一次文档</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;refresh&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;30&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>X-UA-Compatible——告知浏览器以何种版本渲染界面。下面的例子有限使用IE最新版本</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;ie=edge&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>关于是否有必要使用这一条在stack overflow尚且有争议。个人认为如果不想兼容低版本的IE，可以直接忽略这一条。</p>
+<ul>
+<li>Cache-Control——请求和响应遵循的缓存机制，可以声明缓存的内容，修改过期时间，可多次声明</li>
+</ul>
+<blockquote>
+<p>no-transform——不得对资源进行转换或转变。</p>
+<p>no-siteapp——禁止百度进行转码</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;Cache-Control&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;no-transform&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;Cache-Control&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;no-siteapp&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>property &amp; content</li>
+</ul>
+<p>可以让网页成为一个富媒体对象，同意网页内容被其他网站引用，同时在应用的时候不会只是一个链接，会提取相应的信息展现给用户。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;og:type&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;website&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;og:url&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;https://zjgyb.github.io/index.html&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;og:site_name&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;tony&#x27;s blog&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 
             </div>
             <hr>
@@ -435,7 +345,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/dylan/tags/JavaScript/">JavaScript</a>
+                      <a class="hover-with-bg" href="/dylan/tags/HTML/">HTML</a>
                     
                   </div>
                 
@@ -452,18 +362,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/dylan/2022/01/02/meta/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">常用的 meta 元素</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/dylan/2021/12/30/ResponsiveWebDesign/">
-                        <span class="hidden-mobile">响应式设计</span>
+                      <a href="/dylan/2022/01/01/implicit/">
+                        <span class="hidden-mobile">js隐式转换</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
