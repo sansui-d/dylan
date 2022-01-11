@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>原型、原型链、原型链继承</title>
+    <link href="/dylan/2022/01/10/prototype/"/>
+    <url>/dylan/2022/01/10/prototype/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/dylan/imgs/prototype/1.jpg" alt="图1"></p><p>开局一张图，剩下全靠“编”</p><h2 id="原型、原型链"><a href="#原型、原型链" class="headerlink" title="原型、原型链"></a>原型、原型链</h2><p><code>prototype</code>：原型</p><p><code>__prototype__</code>：原型链（链接点）</p><p>每个函数对象上都有拥有这两个属性</p><h2 id="从属关系"><a href="#从属关系" class="headerlink" title="从属关系"></a>从属关系</h2><p><code>prototype</code>：函数的一个属性：对象{}</p><p><code>__proto__</code>：对象 Object 的一个属性：对象{}</p><p>对象的<code>__proto__</code>保存着该对象的构造函数的<code>prototype</code></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Test</span>(<span class="hljs-params"></span>)</span>&#123;&#125;<br><span class="hljs-built_in">console</span>.log(Test.prototype)<br><span class="hljs-keyword">const</span> test = <span class="hljs-keyword">new</span> Test()<br><span class="hljs-built_in">console</span>.log(test.__proto__)<br><span class="hljs-built_in">console</span>.log(test.__proto__===Test.prototype)<span class="hljs-comment">//true</span><br><span class="hljs-built_in">console</span>.log(Test.prototype.__proto__===<span class="hljs-built_in">Object</span>.prototype) <span class="hljs-comment">//true</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.__proto__) <span class="hljs-comment">//null</span><br></code></pre></td></tr></table></figure><h2 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Test</span>(<span class="hljs-params"></span>) </span>&#123; &#125;<br><span class="hljs-keyword">const</span> test = <span class="hljs-keyword">new</span> Test()<br>test.a = <span class="hljs-number">1</span><br>Test.prototype.b = <span class="hljs-number">2</span><br><span class="hljs-built_in">Object</span>.prototype.c = <span class="hljs-number">3</span><br><span class="hljs-built_in">console</span>.log(test.a) <span class="hljs-comment">//1</span><br><span class="hljs-built_in">console</span>.log(test.b)<span class="hljs-comment">//2</span><br><span class="hljs-built_in">console</span>.log(test.c)<span class="hljs-comment">//3</span><br></code></pre></td></tr></table></figure><p>虽然 test 没有 b 和 c 属性，但是 test 是由 Test 构造而来，所以 test 的<code>__proto__</code>会指向 Test 的<code>prototype</code>，从而继承了 Test 的原型对象属性，那么 b 属性会在 Test 的原型对象找到，c 属性会在 Object 的原型对象找到，就这样一层一层的找，直到最顶层也就是   Object.prototype。</p><h2 id="Function与Object的特殊性"><a href="#Function与Object的特殊性" class="headerlink" title="Function与Object的特殊性"></a>Function与Object的特殊性</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span>.__proto__===<span class="hljs-built_in">Function</span>.prototype) <span class="hljs-comment">//true</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.prototype.__proto__) <span class="hljs-comment">//null</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">Object</span>) <span class="hljs-comment">//function</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.__proto__===<span class="hljs-built_in">Function</span>.prototype) <span class="hljs-comment">//true</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.__proto__===<span class="hljs-built_in">Function</span>.__proto__) <span class="hljs-comment">//true</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>) <span class="hljs-comment">//true</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span>) <span class="hljs-comment">//true</span><br></code></pre></td></tr></table></figure><ol><li>Function的<code>__proto__</code>指向Function的<code>prototype</code>，这是底层决定的。</li><li>底层决定</li><li>因为 Object 的结构是 function Object(){native code}</li><li>由3可得出</li><li>由1，3可得出</li><li>函数实际也是一个函数对象</li><li>同理3</li></ol><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>判断属性是否存在：Object.hasOwnProperty</p><p>找链上是否有属性：‘属性’ in 函数对象</p><p>constructor -&gt; 实例化函数对象的构造函数 </p>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JavaScript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>常用的 meta 元素</title>
     <link href="/dylan/2022/01/02/meta/"/>
     <url>/dylan/2022/01/02/meta/</url>
