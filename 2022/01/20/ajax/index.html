@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/dylan/img/favicon.ico">
+  <link rel="icon" href="/dylan/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="ajax的使用、axios二次封装、fetch封装">
+  <meta name="author" content="Dlyan">
+  <meta name="keywords" content="blog">
+  <meta name="description" content="ajax的使用、axios二次封装、fetch封装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ajax的使用、axios二次封装、fetch封装">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2022/01/20/ajax/index.html">
+<meta property="og:site_name" content="Dylan&#39;s blog">
+<meta property="og:description" content="ajax的使用、axios二次封装、fetch封装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sansui-d.github.io/dylan/imgs/ajax/1.jpg">
+<meta property="og:image" content="https://sansui-d.github.io/dylan/imgs/ajax/2.jpg">
+<meta property="article:published_time" content="2022-01-20T13:22:12.000Z">
+<meta property="article:modified_time" content="2022-01-24T12:52:47.311Z">
+<meta property="article:author" content="Dlyan">
+<meta property="article:tag" content="综合">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="ES6">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sansui-d.github.io/dylan/imgs/ajax/1.jpg">
+  
+  <title>ajax的使用、axios二次封装、fetch封装 - Dylan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/dylan/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/dylan/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"sansui-d.github.io","root":"/dylan/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","app_key":"odfvj4BfvPjWMc4l7nuHODEK","server_url":"https://9xwtxrj0.lc-cn-n1-shared.com","path":"window.location.pathname"}},"search_path":"/dylan/local-search.xml"};
+  </script>
+  <script  src="/dylan/js/utils.js" ></script>
+  <script  src="/dylan/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/dylan/">
+      <strong>Dylan</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/dylan/imgs/ajax/big.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="ajax的使用、axios二次封装、fetch封装">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Dlyan
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-20 21:22" pubdate>
+        2022年1月20日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ajax的使用、axios二次封装、fetch封装</h1>
+            
+            <div class="markdown-body">
+              <h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><ol>
+<li><p>ajax</p>
+<p>（1）本身是针对MVC的编程,不符合现在前端MVVM的浪潮</p>
+<p>（2）基于原生的XHR开发，XHR本身的架构不清晰，已经有了fetch的替代方案</p>
+<p>（3）JQuery整个项目太大，单纯使用ajax却要引入整个JQuery非常的不合理（采取个性化打包的方案又不能享受CDN服务）</p>
+</li>
+<li><p>axios</p>
+<p>（1）从 node.js 创建 http 请求</p>
+<p>（2）支持 Promise API</p>
+<p>（3）客户端支持防止CSRF</p>
+<p>（4）提供了一些并发请求的接口（重要，方便了很多的操作）</p>
+</li>
+<li><p>fetch</p>
+<p>（1）符合关注分离，没有将输入、输出和用事件来跟踪的状态混杂在一个对象里<br>（2）更好更方便的写法<br>（3）更加底层，提供的API丰富（request, response）<br>（4）脱离了XHR，是ES规范里新的实现方式<br>（5）fetchtch只对网络请求报错，对400，500都当做成功的请求，需要封装去处理<br>（6）fetch默认不会带cookie，需要添加配置项<br>（7）fetch不支持abort，不支持超时控制，使用setTimeout及Promise.reject的实现的超时控制并不能阻止请求过程继续在后台运行，造成了量的浪费<br>（8）fetch没有办法原生监测请求的进度，而XHR可以</p>
+</li>
+</ol>
+<h2 id="简易node服务器"><a href="#简易node服务器" class="headerlink" title="简易node服务器"></a>简易node服务器</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;express&quot;</span>) <span class="hljs-comment">//npm i express</span><br><span class="hljs-keyword">var</span> app = express()<br><span class="hljs-keyword">var</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;body-parser&quot;</span>) <span class="hljs-comment">// npm i body-parser</span><br>app.use(bodyParser.urlencoded(&#123;<span class="hljs-attr">extended</span>:<span class="hljs-literal">false</span>&#125;)) <span class="hljs-comment">// post请求解析body内容参数</span><br>app.use(bodyParser.json())<br>app.post(<span class="hljs-string">&#x27;/register&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">req,res</span>)=&gt;</span>&#123;<br>    <span class="hljs-keyword">const</span> &#123;a,b&#125; = req.body<br>    res.header(<span class="hljs-string">&quot;Access-Control-Allow-Origin&quot;</span>, req.headers.origin) <span class="hljs-comment">// 简单解决跨域</span><br>    res.send(&#123;<span class="hljs-attr">code</span>:<span class="hljs-number">200</span>,<span class="hljs-attr">msg</span>:<span class="hljs-string">&#x27;注册成功&#x27;</span>,<span class="hljs-attr">data</span>:&#123;a,b&#125;&#125;)<br>&#125;)<br>app.get(<span class="hljs-string">&#x27;/login&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">req,res</span>)=&gt;</span>&#123;<br>    <span class="hljs-keyword">const</span> &#123;a,b&#125; = req.query<br>    res.header(<span class="hljs-string">&quot;Access-Control-Allow-Origin&quot;</span>, req.headers.origin)<br>    res.send(&#123;<span class="hljs-attr">code</span>:<span class="hljs-number">200</span>,<span class="hljs-attr">msg</span>:<span class="hljs-string">&#x27;登录成功&#x27;</span>,<span class="hljs-attr">data</span>:&#123;a,b&#125;&#125;)<br>&#125;)<br>app.listen(<span class="hljs-number">8011</span>,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;启动成功&quot;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>启动一个简易node服务便于后边的http请求验证</p>
+<p><img src="/dylan/imgs/ajax/1.jpg" srcset="/dylan/img/loading.gif" lazyload alt="1"></p>
+<p><img src="/dylan/imgs/ajax/2.jpg" srcset="/dylan/img/loading.gif" lazyload alt="2"></p>
+<h2 id="ajax使用"><a href="#ajax使用" class="headerlink" title="ajax使用"></a>ajax使用</h2><p>html:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;btn1&quot;</span>&gt;</span>发送get请求<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;btn2&quot;</span>&gt;</span>发送post请求<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>js:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs javascript">btn1.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>          <span class="hljs-comment">// 1. 创建对象</span><br>          <span class="hljs-keyword">const</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();<br>          <span class="hljs-comment">// 2. 初始化 设置请求方法和url</span><br>          xhr.open(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;http://localhost:8011/login?a=100&amp;b=200&#x27;</span>);<br>          <span class="hljs-comment">// 3. 发送</span><br>          xhr.send();<br>          <span class="hljs-comment">// 4.事件绑定 处理服务器返回的结果</span><br>          <span class="hljs-comment">// on when 当 ... 的时候</span><br>          <span class="hljs-comment">// readystate 是xhr对象中的属性，表示状态 0 1 2 3 4 </span><br>          <span class="hljs-comment">// 0 初始化的属性状态</span><br>          <span class="hljs-comment">// 1 open方法已经调用完毕</span><br>          <span class="hljs-comment">// 2 send方法调用完毕</span><br>          <span class="hljs-comment">// 3 服务端返回了部分结果</span><br>          <span class="hljs-comment">// 4 服务端返回了所有的结果</span><br>          <span class="hljs-comment">// change 改变的时候触发</span><br>          <span class="hljs-comment">// 下面的函数会被触发四次，状态每改变一次，就会触发一次</span><br>          xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>              <span class="hljs-comment">// 判断（服务端返回了所有的结果）</span><br>              <span class="hljs-keyword">if</span> (xhr.readyState === <span class="hljs-number">4</span>) &#123;<br>                  <span class="hljs-comment">// 判断响应状态码</span><br>                  <span class="hljs-keyword">if</span> (xhr.state &gt;= <span class="hljs-number">200</span> &amp;&amp; xhr.state &lt; <span class="hljs-number">300</span>) &#123;<br>                      <span class="hljs-comment">// 处理结果</span><br>                      <span class="hljs-comment">// console.log(xhr.status); // 状态码</span><br>                      <span class="hljs-comment">// console.log(xhr.statusText); // 状态字符串</span><br>                      <span class="hljs-comment">// console.log(xhr.getAllResponseHeaders()); // 所有响应头</span><br>                      <span class="hljs-comment">// console.log(xhr.response); // 响应体</span><br>                      <span class="hljs-comment">// 设置result 的文本</span><br>                      result.innerHTML = xhr.response;<br>                  &#125;<br>              &#125;<br>          &#125;<br>      &#125;<br>      btn2.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>          <span class="hljs-keyword">const</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();<br>          xhr.open(<span class="hljs-string">&#x27;POST&#x27;</span>, <span class="hljs-string">&#x27;http://localhost:8011/register&#x27;</span>);<br>          xhr.setRequestHeader(<span class="hljs-string">&#x27;Content-Type&#x27;</span>, <span class="hljs-string">&#x27;application/x-www-form-urlencoded&#x27;</span>)<br>          xhr.send(<span class="hljs-string">&#x27;a=100&amp;b=200&#x27;</span>);<br>          xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>              <span class="hljs-keyword">if</span> (xhr.readyState === <span class="hljs-number">4</span>) &#123;<br>                  <span class="hljs-keyword">if</span> (xhr.state &gt;= <span class="hljs-number">200</span> &amp;&amp; xhr.state &lt; <span class="hljs-number">300</span>) &#123;<br>                      result.innerHTML = xhr.response;<br>                  &#125;<br>              &#125;<br>          &#125;<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="axios二次封装"><a href="#axios二次封装" class="headerlink" title="axios二次封装"></a>axios二次封装</h2><p>利用node环境判断请求地址，用来区分开发、生产环境</p>
+<p>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">&#x27;development&#x27;</span>) &#123;<br>  axios.defaults.baseURL = <span class="hljs-string">&#x27;http://dev.xxx.com&#x27;</span><br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">&#x27;production&#x27;</span>) &#123;<br>  axios.defaults.baseURL = <span class="hljs-string">&#x27;http://prod.xxx.com&#x27;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在本地调试中，在 vue.config.js 文件中配置 devServer 实现代理转发，从而解决跨域问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript">devServer: &#123;<br>    <span class="hljs-attr">proxy</span>: &#123;<br>      <span class="hljs-string">&#x27;/proxyApi&#x27;</span>: &#123;<br>        <span class="hljs-attr">target</span>: <span class="hljs-string">&#x27;http://dev.xxx.com&#x27;</span>,<br>        <span class="hljs-attr">changeOrigin</span>: <span class="hljs-literal">true</span>,<br>        <span class="hljs-attr">pathRewrite</span>: &#123;<br>          <span class="hljs-string">&#x27;/proxyApi&#x27;</span>: <span class="hljs-string">&#x27;&#x27;</span><br>        &#125;<br>      &#125;<br>    &#125;<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<p>封装请求头：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> service = axios.create(&#123;<br>    ...<br>    <span class="hljs-attr">timeout</span>: <span class="hljs-number">30000</span>,  <span class="hljs-comment">// 请求 30s 超时</span><br>   <span class="hljs-attr">headers</span>: &#123;<br>        <span class="hljs-attr">get</span>: &#123;<br>          <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/x-www-form-urlencoded;charset=utf-8&#x27;</span><br>          <span class="hljs-comment">// 在开发中，一般还需要单点登录或者其他功能的通用请求头，可以一并配置进来</span><br>        &#125;,<br>        <span class="hljs-attr">post</span>: &#123;<br>          <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json;charset=utf-8&#x27;</span><br>          <span class="hljs-comment">// 在开发中，一般还需要单点登录或者其他功能的通用请求头，可以一并配置进来</span><br>        &#125;<br>  &#125;,<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>封装请求方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// get 请求</span><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">httpGet</span>(<span class="hljs-params">&#123;</span></span><br><span class="hljs-params"><span class="hljs-function">  url,</span></span><br><span class="hljs-params"><span class="hljs-function">  params = &#123;&#125;</span></span><br><span class="hljs-params"><span class="hljs-function">&#125;</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>    axios.get(url, &#123;<br>      params<br>    &#125;).then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>      resolve(res.data)<br>    &#125;).catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>      reject(err)<br>    &#125;)<br>  &#125;)<br>&#125;<br> <br><span class="hljs-comment">// post</span><br><span class="hljs-comment">// post请求</span><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">httpPost</span>(<span class="hljs-params">&#123;</span></span><br><span class="hljs-params"><span class="hljs-function">  url,</span></span><br><span class="hljs-params"><span class="hljs-function">  data = &#123;&#125;,</span></span><br><span class="hljs-params"><span class="hljs-function">  params = &#123;&#125;</span></span><br><span class="hljs-params"><span class="hljs-function">&#125;</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>    axios(&#123;<br>      url,<br>      <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;post&#x27;</span>,<br>      <span class="hljs-attr">transformRequest</span>: [<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>&#123;<br>        <span class="hljs-keyword">let</span> ret = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> it <span class="hljs-keyword">in</span> data) &#123;<br>          ret += <span class="hljs-built_in">encodeURIComponent</span>(it) + <span class="hljs-string">&#x27;=&#x27;</span> + <span class="hljs-built_in">encodeURIComponent</span>(data[it]) + <span class="hljs-string">&#x27;&amp;&#x27;</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> ret<br>      &#125;],<br>      <span class="hljs-comment">// 发送的数据</span><br>      data,<br>      <span class="hljs-comment">// url参数</span><br>      params<br> <br>    &#125;).then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>      resolve(res.data)<br>    &#125;)<br>  &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>把封装的方法放在一个 api.js 文件中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; httpGet, httpPost &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./http&#x27;</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getorglist = <span class="hljs-function">(<span class="hljs-params">params = &#123;&#125;</span>) =&gt;</span> httpGet(&#123; <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;apps/api/org/list&#x27;</span>, params &#125;)<br></code></pre></td></tr></table></figure>
+
+<p>页面中就能直接调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// .vue</span><br><span class="hljs-keyword">import</span> &#123; getorglist &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/assets/js/api&#x27;</span><br> <br>getorglist(&#123; <span class="hljs-attr">id</span>: <span class="hljs-number">200</span> &#125;).then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>  <span class="hljs-built_in">console</span>.log(res)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>请求拦截器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 请求拦截器</span><br>axios.interceptors.request.use(<br>  <span class="hljs-function"><span class="hljs-params">config</span> =&gt;</span> &#123;<br>    <span class="hljs-comment">// 每次发送请求之前判断是否存在token</span><br>    <span class="hljs-comment">// 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况，此处token一般是用户完成登录后储存到localstorage里的</span><br>    token &amp;&amp; (config.headers.Authorization = token)<br>    <span class="hljs-keyword">return</span> config<br>  &#125;,<br>  <span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.error(error)<br>  &#125;)<br></code></pre></td></tr></table></figure>
+
+<p>响应拦截器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 响应拦截器</span><br>axios.interceptors.response.use(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> &#123;<br>  <span class="hljs-comment">// 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据</span><br>  <span class="hljs-comment">// 否则的话抛出错误</span><br>  <span class="hljs-keyword">if</span> (response.status === <span class="hljs-number">200</span>) &#123;<br>    <span class="hljs-keyword">if</span> (response.data.code === <span class="hljs-number">511</span>) &#123;<br>      <span class="hljs-comment">// 未授权调取授权接口</span><br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (response.data.code === <span class="hljs-number">510</span>) &#123;<br>      <span class="hljs-comment">// 未登录跳转登录页</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(response)<br>    &#125;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(response)<br>  &#125;<br>&#125;, <span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> &#123;<br>  <span class="hljs-comment">// 我们可以在这里对异常状态作统一处理</span><br>  <span class="hljs-keyword">if</span> (error.response.status) &#123;<br>    <span class="hljs-comment">// 处理请求失败的情况</span><br>    <span class="hljs-comment">// 对不同返回码对相应处理</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(error.response)<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>请求头、请求方法、拦截可以放在 axios.js 一个文件中</p>
+<h2 id="fetch封装"><a href="#fetch封装" class="headerlink" title="fetch封装"></a>fetch封装</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> TIME_OUT = <span class="hljs-number">6000</span>; <span class="hljs-comment">// 超时时间</span><br><span class="hljs-keyword">const</span> TOKEN = <span class="hljs-string">&#x27;token&#x27;</span>; <span class="hljs-comment">// 自定义token</span><br><span class="hljs-keyword">const</span> ContentType = &#123; <span class="hljs-comment">// ContentType 映射表</span><br>  <span class="hljs-attr">json</span>:<span class="hljs-string">&#x27;application/json;charset=UTF-8&#x27;</span>, <span class="hljs-comment">// json数据格式</span><br>  <span class="hljs-attr">form</span>: <span class="hljs-string">&#x27;application/x-www-form-urlencoded; charset=UTF-8&#x27;</span>, <span class="hljs-comment">// 表单数据格式</span><br>  <span class="hljs-attr">download</span>: <span class="hljs-string">&#x27;application/octet-stream&#x27;</span> <span class="hljs-comment">// 二进制文件流格式，用于download</span><br>&#125;;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@name </span>基础fetch</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;string&#125;</span> </span>url 请求path</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param <span class="hljs-type">&#123;Object&#125;</span> </span>options feich请求配置</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@returns </span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">baseFetch</span>(<span class="hljs-params">url, options</span>) </span>&#123;<br><br>  <span class="hljs-comment">// 基础配置</span><br>  <span class="hljs-keyword">const</span> baseOptions = &#123;<br>    <span class="hljs-attr">method</span>: <span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-comment">// 默认GET请求</span><br>    <span class="hljs-attr">headers</span>: &#123; <span class="hljs-comment">// 默认请求头</span><br>      <span class="hljs-string">&quot;Content-type&quot;</span>: ContentType.json <span class="hljs-comment">// 默认json数据格式</span><br>    &#125;,<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * include:</span><br><span class="hljs-comment">     * 默认不论是不是跨域的请求</span><br><span class="hljs-comment">     * 总是发送请求资源域在本地的 cookies、HTTP Basic authentication 等验证信息</span><br><span class="hljs-comment">     * omit: 从不发送cookies</span><br><span class="hljs-comment">     * same-origin: 同源发送cookies</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-attr">credentials</span>: <span class="hljs-string">&#x27;include&#x27;</span><br>  &#125;;<br><br>  <span class="hljs-comment">// merge options</span><br>  options = <span class="hljs-built_in">Object</span>.assign(baseOptions, options);<br><br>  <span class="hljs-keyword">const</span> &#123;method, body&#125; = options;<br><br>  <span class="hljs-comment">// get请求没有请求体，需要将参数拼接到url上</span><br>  <span class="hljs-keyword">if</span> (method === <span class="hljs-string">&#x27;GET&#x27;</span> &amp;&amp; <span class="hljs-built_in">Object</span>.isObject(body)) &#123;<br>    <span class="hljs-keyword">const</span> paramsArray = [];<br>    <span class="hljs-built_in">Object</span>.keys(body).forEach(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span><br>        paramsArray.push(key + <span class="hljs-string">&quot;=&quot;</span> + <span class="hljs-built_in">encodeURIComponent</span>(body[key]))<br>    );<br>    <span class="hljs-keyword">if</span> (url.search(<span class="hljs-regexp">/\?/</span>) === -<span class="hljs-number">1</span>) &#123;<br>        url += <span class="hljs-string">&quot;?&quot;</span> + paramsArray.join(<span class="hljs-string">&quot;&amp;&quot;</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        url += <span class="hljs-string">&quot;&amp;&quot;</span> + paramsArray.join(<span class="hljs-string">&quot;&amp;&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 删除请求体属性</span><br>    <span class="hljs-keyword">delete</span> options.body;<br>  &#125;<br><br>  <span class="hljs-comment">// request interceptors</span><br>  <span class="hljs-comment">// 查看当前本地是否有token, 如果有，设置自定义headers中TOKEN</span><br>  <span class="hljs-keyword">const</span> token = <span class="hljs-built_in">localStorage</span>.getItem(TOKEN);<br>  <span class="hljs-keyword">if</span> (token) options.headers[<span class="hljs-string">&quot;TOKEN&quot;</span>] = token;<br><br>  <span class="hljs-comment">// 利用 Promise.race 实现超时拦截</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.race([<br>    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        reject(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&#x27;request timeout&#x27;</span>));<br>      &#125;, TIME_OUT);<br>    &#125;),<br>    <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>      <span class="hljs-built_in">window</span>.fetch(url, options)<br>        .then(<span class="hljs-keyword">async</span> res =&gt; &#123;<br><br>          <span class="hljs-comment">// response interceptors 状态码拦截，对应异常状态吗do something</span><br>          <span class="hljs-keyword">if</span>(!<span class="hljs-regexp">/^(2|3)\d&#123;2&#125;$/</span>.test(res.status)) &#123;<br>              <span class="hljs-keyword">switch</span>(res.status) &#123;<br>                  <span class="hljs-keyword">case</span> <span class="hljs-number">401</span>:     <span class="hljs-comment">//当前用户需要验证（一般是未登陆）</span><br>                      <span class="hljs-keyword">break</span>    <span class="hljs-comment">//一般可以弹出遮盖层，或者回到登陆页面</span><br>                  <span class="hljs-keyword">case</span> <span class="hljs-number">403</span>:     <span class="hljs-comment">// 服务器理解请求，但是拒绝执行，一般是token，session过期</span><br>                      <span class="hljs-built_in">localStorage</span>.removeItem(TOKEN) <br>                      <span class="hljs-keyword">break</span><br>                  <span class="hljs-keyword">case</span> <span class="hljs-number">404</span>:     <span class="hljs-comment">// 找不到页面(请求失败，资源在服务器上未找到)，可以给一个友好的提示</span><br>                      <span class="hljs-keyword">break</span>     <br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.reject(res)<br>          &#125;<br>          <span class="hljs-comment">// response interceptors cookies拦截器，存入token</span><br>          <span class="hljs-keyword">if</span> (res.headers[<span class="hljs-string">&#x27;set-cookies&#x27;</span>]) &#123;<br>            <span class="hljs-built_in">localStorage</span>.setItem(TOKEN, res.headers[<span class="hljs-string">&#x27;set-cookies&#x27;</span>]);<br>          &#125;<br><br>          <span class="hljs-comment">// return data</span><br>          <span class="hljs-keyword">const</span> data = options.headers[<span class="hljs-string">&#x27;Content-type&#x27;</span>] === ContentType.download ? res.blob() : res.json();<br>          resolve(data);<br>        &#125;)<br>        .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>          reject(err);<br>        &#125;);<br>    &#125;)<br>  ])<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> fetchGet = <span class="hljs-function">(<span class="hljs-params">url, params</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> baseFetch(url, &#123;<span class="hljs-attr">body</span>: params&#125;);<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> fetchPost = <span class="hljs-function">(<span class="hljs-params">url, params</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> baseFetch(url, &#123;<span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>, <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify(params)&#125;);<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> fetchDownload = <span class="hljs-function">(<span class="hljs-params">url, params</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> baseFetch(url, &#123;<br>    <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,<br>    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify(params),<br>    <span class="hljs-attr">headers</span>: &#123;<br>      <span class="hljs-string">&quot;Content-type&quot;</span>: ContentType.download<br>    &#125;<br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/tags/%E7%BB%BC%E5%90%88/">综合</a>
+                    
+                      <a class="hover-with-bg" href="/dylan/tags/JavaScript/">JavaScript</a>
+                    
+                      <a class="hover-with-bg" href="/dylan/tags/ES6/">ES6</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/dylan/2022/01/10/prototype/">
+                        <span class="hidden-mobile">原型、原型链、原型链继承</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","appKey":"odfvj4BfvPjWMc4l7nuHODEK","path":"window.location.pathname","placeholder":"Say something","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/dylan/js/events.js" ></script>
+<script  src="/dylan/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/dylan/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/dylan/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/dylan/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/dylan/js/boot.js" ></script>
+
+
+</body>
+</html>
