@@ -24,7 +24,7 @@
 <meta property="og:description" content="JavaScript数组常用的方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-02T14:37:14.000Z">
-<meta property="article:modified_time" content="2023-07-02T14:37:58.256Z">
+<meta property="article:modified_time" content="2023-07-02T14:40:58.168Z">
 <meta property="article:author" content="Dlyan">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary_large_image">
@@ -299,14 +299,14 @@
 <h4 id="splice-1"><a href="#splice-1" class="headerlink" title="splice()"></a>splice()</h4><p>传入两个参数，分别是开始位置，删除元素的数量，返回包含删除元素的数组</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> colors = [<span class="hljs-string">&quot;red&quot;</span>, <span class="hljs-string">&quot;green&quot;</span>, <span class="hljs-string">&quot;blue&quot;</span>];<br><span class="hljs-keyword">let</span> removed = colors.splice(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>); <span class="hljs-comment">// 删除第一项</span><br><span class="hljs-built_in">console</span>.log(colors); <span class="hljs-comment">// green,blue</span><br><span class="hljs-built_in">console</span>.log(removed); <span class="hljs-comment">// red，只有一个元素的数组</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="slice"><a href="#slice" class="headerlink" title="slice()"></a>slice()</h3><p>slice() 用于创建一个包含原有数组中一个或多个元素的新数组，不会影响原始数组</p>
+<h4 id="slice"><a href="#slice" class="headerlink" title="slice()"></a>slice()</h4><p>slice() 用于创建一个包含原有数组中一个或多个元素的新数组，不会影响原始数组</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> colors = [<span class="hljs-string">&quot;red&quot;</span>, <span class="hljs-string">&quot;green&quot;</span>, <span class="hljs-string">&quot;blue&quot;</span>, <span class="hljs-string">&quot;yellow&quot;</span>, <span class="hljs-string">&quot;purple&quot;</span>];<br><span class="hljs-keyword">let</span> colors2 = colors.slice(<span class="hljs-number">1</span>);<br><span class="hljs-keyword">let</span> colors3 = colors.slice(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>);<br><span class="hljs-built_in">console</span>.log(colors)   <span class="hljs-comment">// red,green,blue,yellow,purple</span><br>concole.log(colors2); <span class="hljs-comment">// green,blue,yellow,purple</span><br>concole.log(colors3); <span class="hljs-comment">// green,blue,yellow</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="改"><a href="#改" class="headerlink" title="改"></a>改</h4><p>即修改原来数组的内容，常用<code>splice</code></p>
+<h3 id="改"><a href="#改" class="headerlink" title="改"></a>改</h3><p>即修改原来数组的内容，常用<code>splice</code></p>
 <h4 id="splice-2"><a href="#splice-2" class="headerlink" title="splice()"></a>splice()</h4><p>传入三个参数，分别是开始位置，要删除元素的数量，要插入的任意多个元素，返回删除元素的数组，对原数组产生影响</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> colors = [<span class="hljs-string">&quot;red&quot;</span>, <span class="hljs-string">&quot;green&quot;</span>, <span class="hljs-string">&quot;blue&quot;</span>];<br><span class="hljs-keyword">let</span> removed = colors.splice(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&quot;red&quot;</span>, <span class="hljs-string">&quot;purple&quot;</span>); <span class="hljs-comment">// 插入两个值，删除一个元素</span><br><span class="hljs-built_in">console</span>.log(colors); <span class="hljs-comment">// red,red,purple,blue</span><br><span class="hljs-built_in">console</span>.log(removed); <span class="hljs-comment">// green，只有一个元素的数组</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="查"><a href="#查" class="headerlink" title="查"></a>查</h4><p>即查找元素，返回元素坐标或者元素值</p>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><p>即查找元素，返回元素坐标或者元素值</p>
 <ul>
 <li>indexOf()</li>
 <li>includes()</li>
