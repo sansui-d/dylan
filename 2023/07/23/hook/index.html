@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/dylan/img/favicon.png">
+  <link rel="icon" href="/dylan/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="React18新出的Hooks">
+  <meta name="author" content="Dlyan">
+  <meta name="keywords" content="blog">
+  <meta name="description" content="React18新出的Hooks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不常用的React Hooks">
+<meta property="og:url" content="https://sansui-d.github.io/dylan/2023/07/23/hook/index.html">
+<meta property="og:site_name" content="Dylan&#39;s blog">
+<meta property="og:description" content="React18新出的Hooks">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-23T14:20:22.000Z">
+<meta property="article:modified_time" content="2023-07-23T14:21:05.057Z">
+<meta property="article:author" content="Dlyan">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>不常用的React Hooks - Dylan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/dylan/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/dylan/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"sansui-d.github.io","root":"/dylan/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","app_key":"odfvj4BfvPjWMc4l7nuHODEK","server_url":"https://9xwtxrj0.lc-cn-n1-shared.com","path":"window.location.pathname"}},"search_path":"/dylan/local-search.xml"};
+  </script>
+  <script  src="/dylan/js/utils.js" ></script>
+  <script  src="/dylan/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/dylan/">
+      <strong>Dylan</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/dylan/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/dylan/imgs/hook/index.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="不常用的React Hooks">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Dlyan
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-07-23 22:20" pubdate>
+        2023年7月23日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">不常用的React Hooks</h1>
+            
+            <div class="markdown-body">
+              <h1 id="1、useId"><a href="#1、useId" class="headerlink" title="1、useId"></a>1、useId</h1><h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h3><p><code>useId</code> 是一个 React Hook，可以生成传递给无障碍属性的唯一 ID。</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> &#123; useId &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PasswordField</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> passwordHintId = useId();<br>  <span class="hljs-comment">// ...</span><br></code></pre></td></tr></table></figure>
+
+<p>你可以将 生成的 ID 传递给不同的属性：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">aria-describedby</span>=<span class="hljs-string">&#123;passwordHintId&#125;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#123;passwordHintId&#125;</span>&gt;</span><br><span class="hljs-tag">&lt;/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p><code>useId</code> 是一个 Hook，因此你只能 <strong>在组件的顶层</strong> 或自己的 Hook 中调用它。你不能在内部循环或条件判断中调用它。如果需要，可以提取一个新组件并将 state 移到该组件中。</p>
+</li>
+<li><p><code>useId</code> <strong>不应该被用来生成列表中的 key</strong>。key 应该由你的数据生成。</p>
+</li>
+</ul>
+<h1 id="2、useImperativeHandle"><a href="#2、useImperativeHandle" class="headerlink" title="2、useImperativeHandle"></a>2、useImperativeHandle</h1><h3 id="简单介绍-1"><a href="#简单介绍-1" class="headerlink" title="简单介绍"></a>简单介绍</h3><p><code>useImperativeHandle</code> 是 React 中的一个 Hook，它能让你自定义由 <code>ref</code> 暴露出来的句柄。<code>useImperativeHandle</code> 应当与 <code>forwardRef</code> （实现的功能就是外层组件可以通过 ref 直接控制内层组件或元素的行为）一起使用。</p>
+<p><code>useImperativeHandle(ref, createHandle, dependencies?)</code> </p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
+<li><p><code>ref</code>：该 <code>ref</code> 是你从 <code>forwardRef</code> 渲染函数 中获得的第二个参数。</p>
+</li>
+<li><p><code>createHandle</code>：该函数无需参数，它返回你想要暴露的 ref 的句柄。该句柄可以包含任何类型。通常，你会返回一个包含你想暴露的方法的对象。</p>
+</li>
+<li><p><strong>可选的</strong> <code>dependencies</code>：函数 <code>createHandle</code> 代码中所用到的所有反应式的值的列表。反应式的值包含 props、状态和其他所有直接在你组件体内声明的变量和函数。倘若你的代码检查器已 为 React 配置好，它会验证每一个反应式的值是否被正确指定为依赖项。该列表的长度必须是一个常数项，并且必须按照 <code>[dep1, dep2, dep3]</code> 的形式罗列各依赖项。React 会使用 <code>Object.is</code>来比较每一个依赖项与其对应的之前值。如果一次重新渲染导致某些依赖项发生了改变，或你没有提供这个参数列表，你的函数 <code>createHandle</code> 将会被重新执行，而新生成的句柄则会被分配给 <code>ref</code>。</p>
+</li>
+</ul>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p><code>useImperativeHandle</code> 返回 <code>undefined</code>。</p>
+<h3 id="用法-1"><a href="#用法-1" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>父组件使用useRef(或createRef)创建一个ref对象，将这个ref对象赋给子组件的ref属性</li>
+<li>子组件使用forwardRef包装自己，允许作为函数组件的自己使用ref。然后使用useImperativeHandle钩子函数，在该钩子函数的第二个函数参数中返回一些状态或方法，这个被返回的状态或方法就可以被父组件访问到。</li>
+<li>父组件使用创建的ref对象的current属性获取子组件暴露出的状态或方法。</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> React, &#123; useRef, useImperativeHandle &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom&#x27;</span>;<br><br><span class="hljs-keyword">const</span> FancyInput = React.forwardRef(<span class="hljs-function">(<span class="hljs-params">props, ref</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> inputRef = useRef();<br>  useImperativeHandle(ref, <span class="hljs-function">() =&gt;</span> (&#123;<br>    <span class="hljs-attr">focus</span>: <span class="hljs-function">() =&gt;</span> &#123;<br>      inputRef.current.focus();<br>    &#125;<br>  &#125;));<br>  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&#123;inputRef&#125;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> /&gt;</span></span><br>&#125;);<br><br><span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">props</span> =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> fancyInputRef = useRef();<br>  <span class="hljs-keyword">return</span> (<br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">FancyInput</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&#123;fancyInputRef&#125;</span> /&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="xml">        <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> fancyInputRef.current.focus()&#125;      // 调用子组件的方法</span><br><span class="xml">      &gt;父组件调用子组件的 focus<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br>ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>, root);<br></code></pre></td></tr></table></figure>
+
+<h3 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h3><p><strong>不要滥用 ref。</strong> 你应当仅在你没法通过 prop 来表达 <em>命令式</em> 行为的时候才使用 ref：例如，滚动到指定节点、聚焦某个节点、触发一次动画，以及选择文本等等。</p>
+<p><strong>如果可以通过 prop 实现，那就不应该使用 ref</strong>。例如，你不应该从一个 <code>Model</code> 组件暴露出 <code>&#123;open, close&#125;</code> 这样的命令式句柄，最好是像 <code>&lt;Modal isOpen=&#123;isOpen&#125; /&gt;</code> 这样，将 <code>isOpen</code> 作为一个 prop。副作用可以帮你通过 prop 来暴露一些命令式的行为。</p>
+<h1 id="3、useTransition"><a href="#3、useTransition" class="headerlink" title="3、useTransition"></a>3、useTransition</h1><h3 id="简单介绍-2"><a href="#简单介绍-2" class="headerlink" title="简单介绍"></a>简单介绍</h3><p><code>useTransition</code> 是一个让你在不阻塞 UI 的情况下来更新状态的 React Hook。可以理解为降低某些状态更新的优先级</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> [isPending, startTransition] = useTransition()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>isPending</code> 告诉您当前是否有一些状态更新仍处于待处理状态（React 尚未执行，并且优先级较低。您可以使用 isPending 更新 UI 以在等待主要状态时显示一些后备内容更新完成。</p>
+</li>
+<li><p><code>startTransition</code> 函数允许你将状态更新标记为转换状态。被<code>startTransition</code>包裹的状态更新优先级会被降低</p>
+</li>
+</ul>
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> [isPending, startTransition] = useTransition();<br>  <span class="hljs-keyword">const</span> [filterTerm, setFilterTerm] = useState(<span class="hljs-string">&#x27;&#x27;</span>);<br><br>  <span class="hljs-keyword">const</span> filteredProducts = filterProducts(filterTerm);<br><br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateFilterHandler</span>(<span class="hljs-params">event</span>) </span>&#123;<br>    startTransition(<span class="hljs-function">() =&gt;</span> &#123;<br>      setFilterTerm(event.target.value);<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">onchange</span>=<span class="hljs-string">&quot;&#123;updateFilterHandler&#125;&quot;</span>&gt;</span></span><br><span class="xml">      &#123;isPending &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Updating list..<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>&#125;</span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">productlist</span> <span class="hljs-attr">products</span>=<span class="hljs-string">&quot;&#123;filteredProducts&#125;&quot;</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">productlist</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">  );</span><br><span class="xml">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果<code>filterProducts</code>方法耗时严重，那么<code>input</code>输入的信息可能无法及时展示出来，通过<code>startTransition</code>包裹<code>setFilterTerm</code>这个状态更新，那么<code>setFilterTerm</code>状态更新将会滞后，从而及时响应<code>input</code>的输入信息，让用户不再感到卡顿。</p>
+<h3 id="注意事项-2"><a href="#注意事项-2" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p><code>useTransition</code> 是一个 Hook，因此只能在组件或自定义 Hook 内部调用。如果你需要在其他地方启动转换（例如从数据库），请调用独立的 <code>startTransition</code> 函数。</p>
+</li>
+<li><p>只有在你可以访问该状态的 <code>set</code> 函数时，才能将更新包装为转换状态。如果你想响应某个 prop 或自定义 Hook 值启动转换，请尝试使用 <code>useDeferredValue</code>。</p>
+</li>
+<li><p>你传递给 <code>startTransition</code> 的函数必须是同步的。React 立即执行此函数，标记其执行期间发生的所有状态更新为转换状态。如果你稍后尝试执行更多的状态更新（例如在一个定时器中），它们将不会被标记为转换状态。</p>
+</li>
+<li><p>标记为转换状态的状态更新将被其他状态更新打断。例如，如果你在转换状态中更新图表组件，但在图表正在重新渲染时开始在输入框中输入，React 将在处理输入更新后重新启动对图表组件的渲染工作。</p>
+</li>
+<li><p>转换状态更新不能用于控制文本输入。</p>
+</li>
+<li><p>如果有多个正在进行的转换状态，React 目前会将它们批处理在一起。这是一个限制，可能会在未来的版本中被删除。</p>
+</li>
+</ul>
+<h1 id="4、useDeferredValue"><a href="#4、useDeferredValue" class="headerlink" title="4、useDeferredValue"></a>4、useDeferredValue</h1><h3 id="简单介绍-3"><a href="#简单介绍-3" class="headerlink" title="简单介绍"></a>简单介绍</h3><p><code>useDeferredValue</code>是一个React钩子，它接受一个值并返回一个新的值副本，该副本将延迟到更紧急的更新。延迟的值在初始渲染期间与原始值相同，但在后续渲染中会有延迟更新。这种延迟允许React优先处理其他更重要的更新，例如打字或滚动。</p>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><ul>
+<li><code>value</code>：你想延迟的值，可以是任何类型。</li>
+</ul>
+<h3 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h3><p>在组件的初始渲染期间，返回的延迟值将与你提供的值相同。但是在组件更新时，React 将会先尝试使用旧值进行重新渲染（因此它将返回旧值），然后再在后台使用新值进行另一个重新渲染（这时它将返回更新后的值）。</p>
+<h3 id="代码示例-1"><a href="#代码示例-1" class="headerlink" title="代码示例"></a>代码示例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">SearchPage</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> [query, setQuery] = useState(<span class="hljs-string">&quot;&quot;</span>);<br>  <span class="hljs-keyword">const</span> deferredQuery = useDeferredValue(query);<br><br>  <span class="hljs-comment">// Filter through a large list based on the deferred query</span><br>  <span class="hljs-keyword">const</span> list = useMemo(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> largeList.filter(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item.name.includes(deferredQuery));<br>  &#125;, [deferredQuery]);<br><br>  <span class="hljs-comment">// Indicate that the list is stale if it doesn&#x27;t match the query</span><br>  <span class="hljs-keyword">const</span> isStale = deferredQuery !== query;<br><br>  <span class="hljs-keyword">const</span> handleChange = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> &#123;<br>    setQuery(event.target.value);<br>  &#125;;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="xml"><span class="hljs-tag">&lt;&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">input</span></span></span><br><span class="hljs-tag"><span class="xml">        <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span></span></span><br><span class="hljs-tag"><span class="xml">        <span class="hljs-attr">value</span>=<span class="hljs-string">&#123;query&#125;</span></span></span><br><span class="hljs-tag"><span class="xml">        <span class="hljs-attr">onChange</span>=<span class="hljs-string">&#123;handleChange&#125;</span></span></span><br><span class="hljs-tag"><span class="xml">        <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;Search&quot;</span></span></span><br><span class="hljs-tag"><span class="xml">      /&gt;</span></span><br><span class="xml">      &#123;isStale &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">Spinner</span> /&gt;</span>&#125;</span><br><span class="xml">      &#123;list.map((item) =&gt; (</span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">SearchResultItem</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;item.id&#125;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&#123;item&#125;</span> <span class="hljs-attr">isStale</span>=<span class="hljs-string">&#123;isStale&#125;</span> /&gt;</span></span><br><span class="xml">      ))&#125;</span><br><span class="xml">    <span class="hljs-tag">&lt;/&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="注意事项-3"><a href="#注意事项-3" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p>你应该向 <code>useDeferredValue</code> 传递原始值（如字符串和数字）或在渲染之外创建的对象。如果你在渲染期间创建了一个新对象，并立即将其传递给 <code>useDeferredValue</code>，那么每次渲染时这个对象都会不同，这将导致后台不必要的重新渲染。</p>
+</li>
+<li><p>当 <code>useDeferredValue</code> 接收到与之前不同的值（使用 <code>Object.is</code> 进行比较）时，除了当前渲染（此时它仍然使用旧值），它还会安排一个后台重新渲染。这个后台重新渲染是可以被中断的，如果 <code>value</code> 有新的更新，React 会从头开始重新启动后台渲染。举个例子，如果用户在输入框中的输入速度比接收延迟值的图表重新渲染的速度快，那么图表只会在用户停止输入后重新渲染。</p>
+</li>
+<li><p><code>useDeferredValue</code> 与 <code>&lt;Suspense&gt;</code> 集成。如果由于新值引起的后台更新导致 UI 暂停，用户将不会看到 fallback 效果。他们将看到旧的延迟值，直到数据加载完成。</p>
+</li>
+<li><p><code>useDeferredValue</code> 本身并不能阻止额外的网络请求。</p>
+</li>
+<li><p><code>useDeferredValue</code> 本身不会引起任何固定的延迟。一旦 React 完成原始的重新渲染，它会立即开始使用新的延迟值处理后台重新渲染。由事件（例如输入）引起的任何更新都会中断后台重新渲染，并被优先处理。</p>
+</li>
+<li><p>由 <code>useDeferredValue</code> 引起的后台重新渲染在提交到屏幕之前不会触发 Effect。如果后台重新渲染被暂停，Effect 将在数据加载后和 UI 更新后运行。</p>
+</li>
+</ul>
+<h1 id="5、useSyncExternalStore"><a href="#5、useSyncExternalStore" class="headerlink" title="5、useSyncExternalStore"></a>5、useSyncExternalStore</h1><p><code>useSyncExternalStore</code> 是一个让你订阅外部 store 的 React Hook。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> snapshot = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot?)<br></code></pre></td></tr></table></figure>
+
+<h4 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><p><code>subscribe</code>：一个函数，接收一个单独的 <code>callback</code> 参数并把它订阅到 store 上。当 store 发生改变，它应当调用被提供的 <code>callback</code>。这会导致组件重新渲染。<code>subscribe</code> 函数会返回清除订阅的函数。</p>
+</li>
+<li><p><code>getSnapshot</code>：一个函数，返回组件需要的 store 中的数据快照。在 store 不变的情况下，重复调用 <code>getSnapshot</code> 必须返回同一个值。如果 store 改变，并且返回值也不同了（用 <code>Object.is</code> 比较），React 就会重新渲染组件。</p>
+</li>
+<li><p><strong>可选</strong> <code>getServerSnapshot</code>：一个函数，返回 store 中数据的初始快照。它只会在服务端渲染时，以及在客户端进行服务端渲染内容的 hydration 时被用到。快照在服务端与客户端之间必须相同，它通常是从服务端序列化并传到客户端的。如果你忽略此参数，在服务端渲染这个组件会抛出一个错误。</p>
+</li>
+</ul>
+<h4 id="返回值-2"><a href="#返回值-2" class="headerlink" title="返回值"></a>返回值</h4><p>该 store 的当前快照，可以在你的渲染逻辑中使用。</p>
+<h4 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h4><ul>
+<li><p><code>getSnapshot</code> 返回的 store 快照必须是不可变的。如果底层 store 有可变数据，要在数据改变时返回一个新的不可变快照。否则，返回上次缓存的快照。</p>
+</li>
+<li><p>如果在重新渲染时传入一个不同的 <code>subscribe</code> 函数，React 会用新传入的 <code>subscribe</code> 函数重新订阅该 store。你可以通过在组件外声明 <code>subscribe</code> 来避免。</p>
+</li>
+</ul>
+<p><em><strong>React 官方建议这个 hooks 应该给库的开发者使用，不建议应用开发者直接去进行使用</strong></em></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/categories/%E5%B7%A5%E4%BD%9C%E5%B8%B8%E7%94%A8/">工作常用</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/dylan/tags/React/">React</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/dylan/2023/07/02/array/">
+                        <span class="hidden-mobile">JavaScript数组常用的方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"9XwtxRJ01KvOt7M7ioteVov8-gzGzoHsz","appKey":"odfvj4BfvPjWMc4l7nuHODEK","path":"window.location.pathname","placeholder":"Say something","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/dylan/js/events.js" ></script>
+<script  src="/dylan/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/dylan/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/dylan/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+  <script defer src="/dylan/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/dylan/js/boot.js" ></script>
+
+
+</body>
+</html>
